@@ -44,4 +44,5 @@ jobs:
           MONGO_URL: mongodb://localhost:27017/test_db
           REDIS_URL: redis://localhost:6379
           JWT_SECRET: test_secret
-        run: npm run test
+        run: cd ./apps/backend && npm run test 
+        
