@@ -19,6 +19,37 @@ export class UsersService {
     private readonly jwtServise: JwtService,
   ) {}
 
+  async googleAuth(userData: {
+    username: string;
+    google_id: string;
+    email: string;
+  }) {
+    const user = await this.userModel.findOne({ email: userData.email });
+
+    if (user) {
+      const token = this.jwtServise.sign(
+        { _id: user._id },
+        { secret: process.env.JWT_SECRET },
+      );
+
+      return token;
+    }
+
+    const newUser = new this.userModel({
+      username: userData.username,
+      email: userData.email,
+      google_id: userData.google_id,
+    });
+
+    await newUser.save();
+
+    const token = this.jwtServise.sign(
+      { _id: newUser._id },
+      { secret: process.env.JWT_SECRET },
+    );
+
+    return token;
+  }
   async create(dto: CreateUserDto) {
     const users = await this.findByName(dto.username);
 
@@ -43,16 +74,8 @@ export class UsersService {
         secret: process.env.JWT_SECRET,
       },
     );
-    return {
-      message: 'create user successfully',
-      user: {
-        _id: newUser._id,
-        username: newUser.username,
-        email: newUser.email,
-        picture: newUser.picture,
-      },
-      token,
-    };
+
+    return token;
   }
   async findByName(username: string) {
     const users = await this.userModel.find({ username });
@@ -63,9 +86,8 @@ export class UsersService {
     const user = await this.userModel
       .findOne({ email: dto.email })
       .select('+password');
-      console.log(user?.username);
+
     if (!user) {
-      console.log('here is the bug');
       throw new BadRequestException('user is not exist');
     }
     if (!user.password) {
@@ -82,17 +104,7 @@ export class UsersService {
           secret: process.env.JWT_SECRET,
         },
       );
-
-      return {
-        message: 'login successful',
-        token,
-        user: {
-          username: user?.username,
-          email: user?.email,
-          _id: user?._id,
-          picture: user.picture,
-        },
-      };
+      return token;
     }
 
     throw new UnauthorizedException('password is wrong');

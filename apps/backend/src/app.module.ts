@@ -5,7 +5,7 @@ import { RedisProvider } from './providers/redis.provider';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { NodesModule } from './nodes/nodes.module';
-import { JwtStrategy } from './auth/jwt.strategy';
+import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
