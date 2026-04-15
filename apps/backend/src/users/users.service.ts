@@ -63,7 +63,9 @@ export class UsersService {
     const user = await this.userModel
       .findOne({ email: dto.email })
       .select('+password');
+      console.log(user?.username);
     if (!user) {
+      console.log('here is the bug');
       throw new BadRequestException('user is not exist');
     }
     if (!user.password) {
