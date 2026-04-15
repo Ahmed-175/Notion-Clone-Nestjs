@@ -1,4 +1,5 @@
 import { INestApplication } from '@nestjs/common';
+import { getConnectionToken } from '@nestjs/mongoose';
 import { Test } from '@nestjs/testing';
 import { AppModule } from 'src/app.module';
 import request from 'supertest';
@@ -51,6 +52,10 @@ describe('Auth Module E2E Testing', () => {
   });
 
   afterAll(async () => {
+    const redis = app.get('REDIS_CLIENT');
     await app.close();
+    const connection = app.get(getConnectionToken());
+    await connection.close();
+    await redis.quit();
   });
 });
