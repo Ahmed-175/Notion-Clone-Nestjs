@@ -66,7 +66,12 @@ export class NodesService {
   async getNoteTree(userId: string) {
     console.log(userId);
     const nodes = await this.nodeModel.find({ ownerId: userId });
-    const tree = this.buildTree.buildTreeFileSystem(nodes);
+    const sortedNodes = nodes.sort((a ,b ) => {
+      if(a.type === b.type) return 0; 
+      if(a.type === "folder")  return -1;
+      return 1
+    })
+    const tree = this.buildTree.buildTreeFileSystem(sortedNodes);
     console.log(tree);
     return {
       tree

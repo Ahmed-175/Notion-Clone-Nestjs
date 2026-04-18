@@ -19,6 +19,8 @@ export class Note {
     ref: Node.name,
   })
   nodeId: mongoose.Types.ObjectId | null;
+  @Prop({ default: '' })
+  banner: string;
   @Prop({ default: [] })
   tags: string[];
   resoures: [{ label: string; link: string }];
