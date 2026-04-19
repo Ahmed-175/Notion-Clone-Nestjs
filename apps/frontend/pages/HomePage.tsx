@@ -1,26 +1,33 @@
 "use client";
 import NodeHomePage from "@/components/homePage/NodeHomePage";
-import Menu from "@/components/sidebar_components/Menu";
 import useMenu from "@/hooks/useMenu";
 import useNodes from "@/hooks/useNodes";
 import { INode } from "@/types/node.type";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 const HomePage = () => {
   const { nodes } = useNodes();
   const { showMenu } = useMenu();
   const [path, setPath] = useState<INode[]>([]);
-  const [openMenuHomePage, setOpenMenuHomePage] = useState(false);
 
-  const currentNodes =
-    path.length === 0 ? nodes : path[path.length - 1].children || null;
+  const currentFolder = path.length > 0 ? path[path.length - 1] : null;
+
+  const currentNodes = useMemo(() => {
+    return Object.values(nodes).filter((node) => {
+      if (!currentFolder) {
+        return node.parentId === null;
+      }
+      return node.parentId === currentFolder._id;
+    });
+  }, [nodes, currentFolder]);
 
   const handleOpenFolder = (node: INode) => {
     if (node.type === "folder") {
       setPath((prev) => [...prev, node]);
     }
   };
+
   const handleBack = () => {
     setPath((prev) => prev.slice(0, -1));
   };
@@ -31,6 +38,7 @@ const HomePage = () => {
     type: "folder",
     isFavorite: false,
     isTrash: false,
+    parentId: null,
     children: [],
   };
 
@@ -39,11 +47,12 @@ const HomePage = () => {
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        showMenu(home , e.clientX , e.clientY)
+        showMenu(home, e.clientX, e.clientY);
       }}
       className="relative min-h-[80vh]"
     >
       <h1 className="w-full text-4xl mb-9 font-bold text-center">Home Page</h1>
+
       {path.length > 0 && (
         <div
           onClick={handleBack}
@@ -55,11 +64,12 @@ const HomePage = () => {
           <IoChevronBackCircleOutline />
         </div>
       )}
+
       <div className="flex flex-wrap w-full gap-3 h-fit">
-        {currentNodes.map((node, index) => (
+        {currentNodes.map((node) => (
           <NodeHomePage
             node={node}
-            key={index}
+            key={node._id as any}
             onOpenFolder={handleOpenFolder}
           />
         ))}

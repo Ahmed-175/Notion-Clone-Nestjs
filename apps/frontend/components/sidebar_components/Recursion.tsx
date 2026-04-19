@@ -1,19 +1,26 @@
 import { INode } from "@/types/node.type";
-import  { Activity, useState } from "react";
 import Node from "./Node";
-import FileSystem from "./FileSystem";
+import useNodes from "@/hooks/useNodes";
+import { useState } from "react";
 
 const Recursion = ({ node }: { node: INode }) => {
+  const { nodes } = useNodes();
   const [isOpen, setIsOpen] = useState(false);
+
+  const children = Object.values(nodes).filter(
+    (n) => n.parentId === node._id
+  );
+
   return (
-    <div key={node._id} className="ml-2 ">
+    <div className="ml-2">
       <Node node={node} isOpen={isOpen} setIsOpen={setIsOpen} />
-      {node.children?.length > 0 && (
-        <Activity mode={isOpen ? "visible" : "hidden"}>
-          <div className="ml-2 border-l border-gray-300 pl-1">
-            <FileSystem nodes={node.children} />
-          </div>
-        </Activity>
+
+      {children.length > 0 && isOpen && (
+        <div className="ml-2 border-l border-gray-300 pl-1">
+          {children.map((child) => (
+            <Recursion key={child._id as any} node={child} />
+          ))}
+        </div>
       )}
     </div>
   );

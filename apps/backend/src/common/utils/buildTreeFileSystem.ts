@@ -3,24 +3,31 @@ import { Node } from 'src/nodes/schemas/node.schema';
 
 @Injectable()
 export class BuildTree {
-  buildTreeFileSystem(nodes: Node[], parentId: any = null) {
-    const tree = nodes
-      .filter((node) => {
-        if (parentId === null) {
-          return node.parentId === null;
-        }
-        return node.parentId?.toString() === parentId?.toString();
-      })
-      .map((node) => ({
+  buildNormalized(nodes: Node[]) {
+    const map: Record<string, any> = {};
+
+    nodes.forEach((node) => {
+      const id = (node as any)._id.toString();
+      map[id] = {
         _id: (node as any)._id,
         title: node.title,
         type: node.type,
         isFavorite: node.isFavorite,
         isTrash: node.isTrash,
+        parentId: node.parentId ? node.parentId.toString() : null,
+        children: [],
+      };
+    });
 
-        children: this.buildTreeFileSystem(nodes, (node as any)._id),
-      }));
+    nodes.forEach((node) => {
+    const id = (node as any)._id.toString();
+    const parentId = node.parentId ? node.parentId.toString() : null;
 
-    return tree;
+    if(parentId && map[parentId]){
+      map[parentId].children.push(id);
+    }
+    });
+
+    return map;
   }
 }

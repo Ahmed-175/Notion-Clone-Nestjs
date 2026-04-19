@@ -1,4 +1,3 @@
-import useAuth from "@/hooks/useAuth";
 import useToast from "@/hooks/useToast";
 import { getNodes } from "@/services/user.service";
 import { INode } from "@/types/node.type";
@@ -11,15 +10,14 @@ import {
 } from "react";
 
 interface INodeContext {
-  nodes: INode[];
-  setNodes: React.Dispatch<SetStateAction<INode[]>>;
+  nodes: Record<string, INode>;
+  setNodes: React.Dispatch<SetStateAction<Record<string, INode>>>;
   loading: boolean;
 }
 
 export const NodeContext = createContext<INodeContext | null>(null);
-
 const NodeProvider = ({ children }: { children: ReactNode }) => {
-  const [nodes, setNodes] = useState<INode[]>([]);
+  const [nodes, setNodes] = useState<Record<string, INode>>({});
   const [loading, setLoading] = useState(false);
 
   const { showMgs } = useToast();
@@ -30,7 +28,7 @@ const NodeProvider = ({ children }: { children: ReactNode }) => {
 
       try {
         const data = await getNodes();
-        setNodes(data.tree);
+        setNodes(data.map);
       } catch (error) {
         showMgs({
           type: "error",
