@@ -18,7 +18,7 @@ const useNodeActions = () => {
         parentId,
       });
 
-      const node: INode = res.data.node;
+      const node: INode = (res.data as any).node;
 
       setNodes((prev) => {
         const newNodes = { ...prev };
@@ -56,7 +56,23 @@ const useNodeActions = () => {
     }
   };
 
-  return { addNode };
+  const renameNode = async (id: string, title: string) => {
+    try {
+      await nodeService.update(id, { title });
+      setNodes((prev) => {
+        const newNodes = { ...prev };
+        if (newNodes[id]) {
+          newNodes[id] = { ...newNodes[id], title };
+        }
+        return newNodes;
+      });
+      showMgs({ type: "success", message: "node renamed successfully" });
+    } catch (error) {
+      showMgs({ type: "error", message: "failed to rename node" });
+    }
+  };
+
+  return { addNode, renameNode };
 };
 
 export default useNodeActions;
