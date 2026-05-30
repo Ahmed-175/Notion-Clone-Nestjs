@@ -69,9 +69,11 @@ describe("Auth Module E2E Testing", () => {
   });
 
   afterAll(async () => {
-    const connection = app.get(getConnectionToken());
-    await connection.close();
+    if (app) {
+      const connection = app.get(getConnectionToken());
+      await connection.close();
+      await app.close();
+    }
     await redis.quit();
-    await app.close();
   });
 });
