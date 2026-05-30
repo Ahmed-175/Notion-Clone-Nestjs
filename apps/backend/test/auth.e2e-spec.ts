@@ -3,6 +3,7 @@ import { getConnectionToken } from "@nestjs/mongoose";
 import { Test } from "@nestjs/testing";
 import cookieParser from "cookie-parser";
 import { AppModule } from "src/app.module";
+import { redis } from "src/providers/redis.provider";
 import request from "supertest";
 
 describe("Auth Module E2E Testing", () => {
@@ -19,6 +20,15 @@ describe("Auth Module E2E Testing", () => {
     app.use(cookieParser());
 
     await app.init();
+
+    // Clean up test user in case it already exists in the database
+    const connection = app.get(getConnectionToken());
+    await connection.collection("users").deleteMany({
+      $or: [
+        { email: "test@gmail.com" },
+        { username: "test123" }
+      ]
+    });
 
     agent = request.agent(app.getHttpServer());
   });
@@ -61,6 +71,7 @@ describe("Auth Module E2E Testing", () => {
   afterAll(async () => {
     const connection = app.get(getConnectionToken());
     await connection.close();
+    await redis.quit();
     await app.close();
   });
 });

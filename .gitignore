@@ -28,7 +28,7 @@ coverage
 out/
 build
 dist
-
+uploads
 
 # Debug
 npm-debug.log*
