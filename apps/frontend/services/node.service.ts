@@ -1,14 +1,12 @@
 import axiosInstance from "@/api/axiosInstance";
+import { endpoints } from "@/api/endpoints";
 
-export const addNode = async (
-  title: string,
-  type: "folder" | "note",
-  parentId: string | null,
-) => {
-  const data = await axiosInstance.post("/nodes/create", {
-    title,
-    type,
-    parentId,
-  });
-  return data.data;
+export const nodeService = {
+  create: (data: {
+    title: string;
+    type: "folder" | "note";
+    parentId: string | null;
+  }) => {
+    return axiosInstance.post(endpoints.nodes.create, data);
+  },
 };

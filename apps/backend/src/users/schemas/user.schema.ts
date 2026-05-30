@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 @Schema({ timestamps: true, versionKey: false })
 export class User {
@@ -6,11 +6,11 @@ export class User {
   username: string;
   @Prop({ required: true, unique: true })
   email: string;
-  @Prop({ min: 6 , select : false })
+  @Prop({ min: 6, select: false })
   password?: string;
-  @Prop({select : false})
+  @Prop({ select: false })
   google_id: string;
-  @Prop({ default: '' })
+  @Prop({ default: "" })
   picture: string;
 }
 

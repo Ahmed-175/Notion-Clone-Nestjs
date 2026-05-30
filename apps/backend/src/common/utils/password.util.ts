@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import bcrypt from 'bcrypt';
+import { Injectable } from "@nestjs/common";
+import bcrypt from "bcrypt";
 
 @Injectable()
 export class PasswordHasher {

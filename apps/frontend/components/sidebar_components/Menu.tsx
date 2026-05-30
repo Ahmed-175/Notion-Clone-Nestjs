@@ -4,8 +4,10 @@ import { FaRegFolder, FaRegStar, FaRegTrashAlt } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { GoLink } from "react-icons/go";
 import MenuItem from "./MenuItem";
+import useNodeActions from "@/hooks/useNodeActions";
 
 const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
+  const { addNode } = useNodeActions();
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -24,13 +26,18 @@ const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
           <MenuItem
             icon={<CgNotes />}
             label="Create new note"
-            onClick={() => {}}
+            onClick={() => {
+              addNode("untitle", "note", node._id ? node._id : null);
+            }}
           />
 
           <MenuItem
             icon={<FaRegFolder />}
             label="Create new folder"
-            onClick={() => {}}
+            onClick={() => {
+              console.log(node._id ? node._id : null);
+              addNode("untitle-folder", "folder", node._id ? node._id : null);
+            }}
           />
         </>
       )}
@@ -44,9 +51,7 @@ const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
           <MenuItem
             icon={<FiEdit />}
             label={`Rename the ${node.type}`}
-            onClick={() => {
-              console.log("rename");
-            }}
+            onClick={() => {}}
           />
 
           <MenuItem icon={<GoLink />} label="Copy link" onClick={() => {}} />

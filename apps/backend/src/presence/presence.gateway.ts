@@ -4,13 +4,13 @@ import {
   OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
-} from '@nestjs/websockets';
-import { PresenceService } from './presence.service';
-import { Server, Socket } from 'socket.io';
+} from "@nestjs/websockets";
+import { PresenceService } from "./presence.service";
+import { Server, Socket } from "socket.io";
 
 @WebSocketGateway({
   cors: {
-    origin: '*',
+    origin: "*",
   },
 })
 export class PresenceGateway implements OnGatewayDisconnect {
@@ -18,7 +18,7 @@ export class PresenceGateway implements OnGatewayDisconnect {
   constructor(private readonly presenceService: PresenceService) {}
   private userMap = new Map<string, { noteId: string; userId: string }>();
 
-  @SubscribeMessage('join_note')
+  @SubscribeMessage("join_note")
   async handleJoin(
     @MessageBody() data: { noteId: string; userId: string },
     @ConnectedSocket() client: Socket,
@@ -28,16 +28,16 @@ export class PresenceGateway implements OnGatewayDisconnect {
     this.userMap.set(client.id, { noteId, userId });
     const count = await this.presenceService.join(noteId, userId);
 
-    this.server.to(noteId).emit('note_users_count', count);
+    this.server.to(noteId).emit("note_users_count", count);
   }
 
-  @SubscribeMessage('leave_note')
+  @SubscribeMessage("leave_note")
   async handleLeave(@ConnectedSocket() client: Socket) {
     const data = this.userMap.get(client.id);
     if (!data) return;
     const { noteId, userId } = data;
     const count = await this.presenceService.leave(noteId, userId);
-    this.server.to(noteId).emit('note_users_count', count);
+    this.server.to(noteId).emit("note_users_count", count);
     this.userMap.delete(client.id);
   }
 
@@ -47,7 +47,7 @@ export class PresenceGateway implements OnGatewayDisconnect {
     const { noteId, userId } = data;
     const count = await this.presenceService.leave(noteId, userId);
 
-    this.server.to(noteId).emit('note_users_count', count);
+    this.server.to(noteId).emit("note_users_count", count);
 
     this.userMap.delete(client.id);
   }

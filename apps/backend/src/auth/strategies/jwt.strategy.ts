@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { Request } from 'express';
-import { ExtractJwt, Strategy } from 'passport-jwt';
+import { Injectable } from "@nestjs/common";
+import { PassportStrategy } from "@nestjs/passport";
+import { Request } from "express";
+import { ExtractJwt, Strategy } from "passport-jwt";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -9,7 +9,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const secret = process.env.JWT_SECRET;
 
     if (!secret) {
-      throw new Error('jwt secret is not define');
+      throw new Error("jwt secret is not define");
     }
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([

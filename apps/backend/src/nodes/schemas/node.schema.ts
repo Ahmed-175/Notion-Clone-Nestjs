@@ -1,13 +1,13 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
-import { User } from 'src/users/schemas/user.schema';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose from "mongoose";
+import { User } from "src/users/schemas/user.schema";
 
 @Schema({ timestamps: true, versionKey: false })
 export class Node {
-  @Prop({ required: true, default: 'Untitle' })
+  @Prop({ required: true, default: "Untitle" })
   title: string;
-  @Prop({ required: true, default: 'note' })
-  type: 'folder' | 'note';
+  @Prop({ required: true, default: "note" })
+  type: "folder" | "note";
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Node.name,

@@ -6,12 +6,22 @@ import { INode } from "@/types/node.type";
 import { useMemo, useState } from "react";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 
+const home: INode = {
+  title: "main folder",
+  _id: null,
+  type: "folder",
+  isFavorite: false,
+  isTrash: false,
+  parentId: null,
+  children: [],
+};
+
 const HomePage = () => {
   const { nodes } = useNodes();
   const { showMenu } = useMenu();
   const [path, setPath] = useState<INode[]>([]);
 
-  const currentFolder = path.length > 0 ? path[path.length - 1] : null;
+  const currentFolder = path.length > 0 ? path[path.length - 1] : home;
 
   const currentNodes = useMemo(() => {
     return Object.values(nodes).filter((node) => {
@@ -32,22 +42,12 @@ const HomePage = () => {
     setPath((prev) => prev.slice(0, -1));
   };
 
-  const home: INode = {
-    title: "main folder",
-    _id: null,
-    type: "folder",
-    isFavorite: false,
-    isTrash: false,
-    parentId: null,
-    children: [],
-  };
-
   return (
     <div
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        showMenu(home, e.clientX, e.clientY);
+        showMenu(currentFolder, e.clientX, e.clientY);
       }}
       className="relative min-h-[80vh]"
     >

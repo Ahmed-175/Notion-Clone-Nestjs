@@ -4,6 +4,6 @@ export interface INode {
   type: "folder" | "note";
   isFavorite: boolean;
   isTrash: boolean;
-  parentId : string | null;
+  parentId: string | null;
   children: string[];
 }

@@ -41,7 +41,6 @@ const NodeHomePage = ({
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log("check node her" , node);
         handleClick(node);
       }}
       className="border bg-white grow p-3 min-w-70 h-50 rounded-lg cursor-pointer"
@@ -67,7 +66,6 @@ const NodeHomePage = ({
           >
             {node.children.map((childId: any, index) => {
               const child = nodes[childId];
-              console.log(child.title);
               if (!child) return null;
 
               return (

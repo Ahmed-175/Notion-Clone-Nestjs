@@ -1,13 +1,13 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
-import { Node } from './node.schema';
-import { Block, BlockSchema } from './block.schema';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose from "mongoose";
+import { Node } from "./node.schema";
+import { Block, BlockSchema } from "./block.schema";
 
 enum Fonts {
-  DEFAULT = 'default',
-  POPPINS = 'poppins',
-  ALEGREYA = 'alegreya',
-  CAIRO = 'cairo',
+  DEFAULT = "default",
+  POPPINS = "poppins",
+  ALEGREYA = "alegreya",
+  CAIRO = "cairo",
 }
 
 @Schema({ timestamps: true, versionKey: false })
@@ -19,7 +19,7 @@ export class Note {
     ref: Node.name,
   })
   nodeId: mongoose.Types.ObjectId | null;
-  @Prop({ default: '' })
+  @Prop({ default: "" })
   banner: string;
   @Prop({ default: [] })
   tags: string[];
@@ -30,8 +30,8 @@ export class Note {
   public: boolean;
   @Prop({ default: 27 })
   font_size: number;
-  @Prop({ default: 'en' })
-  lang: 'en' | 'ar';
+  @Prop({ default: "en" })
+  lang: "en" | "ar";
   @Prop({ type: [BlockSchema], default: [] })
   blocks: Block[];
 }

@@ -5,26 +5,26 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
-} from '@nestjs/common';
-import { UsersService } from './users.service';
-import { JwtGuard } from 'src/common/guards/jwt.guard';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { storgeUserPicture } from 'src/common/config/multer.config';
-import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schemas/user.schema';
-import { Model } from 'mongoose';
+} from "@nestjs/common";
+import { UsersService } from "./users.service";
+import { JwtGuard } from "src/common/guards/jwt.guard";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { storgeUserPicture } from "src/common/config/multer.config";
+import { InjectModel } from "@nestjs/mongoose";
+import { User } from "./schemas/user.schema";
+import { Model } from "mongoose";
 
 @UseGuards(JwtGuard)
-@Controller('users')
+@Controller("users")
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     @InjectModel(User.name) private userModel: Model<User>,
   ) {}
 
-  @Post('upload')
+  @Post("upload")
   @UseInterceptors(
-    FileInterceptor('picture', {
+    FileInterceptor("picture", {
       storage: storgeUserPicture,
     }),
   )
@@ -34,7 +34,7 @@ export class UsersController {
     });
 
     return {
-      url : picture.filename
-    }
+      url: picture.filename,
+    };
   }
 }

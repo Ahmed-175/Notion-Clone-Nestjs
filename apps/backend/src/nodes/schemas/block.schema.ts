@@ -1,21 +1,21 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
-import { Note } from './note.schema';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose from "mongoose";
+import { Note } from "./note.schema";
 
 export enum BlockType {
-  H1 = 'h1',
-  H2 = 'h2',
-  H3 = 'h3',
-  H4 = 'h4',
-  P = 'p',
-  LINE = 'line',
-  LINK = 'link',
-  IMAGE = 'image',
-  VIDEO = 'video',
-  QUOTE = 'quote',
-  TODO = 'todo',
-  LIST = 'list',
-  MSQ = 'msq',
+  H1 = "h1",
+  H2 = "h2",
+  H3 = "h3",
+  H4 = "h4",
+  P = "p",
+  LINE = "line",
+  LINK = "link",
+  IMAGE = "image",
+  VIDEO = "video",
+  QUOTE = "quote",
+  TODO = "todo",
+  LIST = "list",
+  MSQ = "msq",
 }
 
 @Schema({ timestamps: true, versionKey: false })
@@ -72,6 +72,6 @@ export const BlockSchema = SchemaFactory.createForClass(Block);
 BlockSchema.index({ noteId: 1 });
 BlockSchema.index({ noteId: 1, order: 1 });
 BlockSchema.index({
-  content: 'text',
-  question: 'text',
+  content: "text",
+  question: "text",
 });

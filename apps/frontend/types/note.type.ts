@@ -1,4 +1,1 @@
-
-export interface INote {
-
-}
+export interface INote {}

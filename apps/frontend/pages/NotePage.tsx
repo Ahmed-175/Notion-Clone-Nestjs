@@ -1,14 +1,8 @@
-import useTab from '@/hooks/useTab'
+import useTab from "@/hooks/useTab";
 
 const NotePage = () => {
-  const {currentTab} =useTab()
-  return (
-    <div>
-      {currentTab.name}
-    
-    
-    </div>
-  )
-}
+  const { currentTab } = useTab();
+  return <div>{currentTab.name}</div>;
+};
 
-export default NotePage
+export default NotePage;

@@ -2,7 +2,7 @@ import axiosInstance from "@/api/axiosInstance";
 import { endpoints } from "@/api/endpoints";
 
 export const getNodes = async () => {
-  const res = await axiosInstance.get(endpoints.nodes);
+  const res = await axiosInstance.get(endpoints.nodes.get);
 
   return res.data;
 };

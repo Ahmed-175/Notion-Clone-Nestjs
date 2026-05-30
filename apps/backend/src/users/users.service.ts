@@ -2,14 +2,14 @@ import {
   BadRequestException,
   Injectable,
   UnauthorizedException,
-} from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schemas/user.schema';
-import { Model } from 'mongoose';
-import { CreateUserDto } from './dto/create-user.dto';
-import { PasswordHasher } from 'src/common/utils/password.util';
-import { JwtService } from '@nestjs/jwt';
-import { LoginAuthDto } from 'src/auth/dto/login-user.dto';
+} from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { User } from "./schemas/user.schema";
+import { Model } from "mongoose";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { PasswordHasher } from "src/common/utils/password.util";
+import { JwtService } from "@nestjs/jwt";
+import { LoginAuthDto } from "src/auth/dto/login-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -54,11 +54,11 @@ export class UsersService {
     const users = await this.findByName(dto.username);
 
     if (users.length) {
-      throw new BadRequestException('username is already used');
+      throw new BadRequestException("username is already used");
     }
     const isExistEmail = await this.userModel.findOne({ email: dto.email });
     if (isExistEmail) {
-      throw new BadRequestException('email is already used');
+      throw new BadRequestException("email is already used");
     }
     const passwordHashed = await this.hasher.hash(dto.password);
 
@@ -85,13 +85,13 @@ export class UsersService {
   async checkUser(dto: LoginAuthDto) {
     const user = await this.userModel
       .findOne({ email: dto.email })
-      .select('+password');
+      .select("+password");
 
     if (!user) {
-      throw new BadRequestException('user is not exist');
+      throw new BadRequestException("user is not exist");
     }
     if (!user.password) {
-      throw new BadRequestException('login in with your google account');
+      throw new BadRequestException("login in with your google account");
     }
     const isCorrect = await this.hasher.comparePasswords(
       dto.password,
@@ -107,7 +107,7 @@ export class UsersService {
       return token;
     }
 
-    throw new UnauthorizedException('password is wrong');
+    throw new UnauthorizedException("password is wrong");
   }
 
   async me(_id: string) {

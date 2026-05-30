@@ -13,6 +13,7 @@ interface INodeContext {
   nodes: Record<string, INode>;
   setNodes: React.Dispatch<SetStateAction<Record<string, INode>>>;
   loading: boolean;
+  setLoading: React.Dispatch<SetStateAction<boolean>>;
 }
 
 export const NodeContext = createContext<INodeContext | null>(null);
@@ -43,7 +44,7 @@ const NodeProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <NodeContext.Provider value={{ nodes, setNodes, loading }}>
+    <NodeContext.Provider value={{ nodes, setNodes, loading, setLoading }}>
       {children}
     </NodeContext.Provider>
   );

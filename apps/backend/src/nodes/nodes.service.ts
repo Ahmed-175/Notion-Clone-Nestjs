@@ -1,11 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Node } from './schemas/node.schema';
-import { Model } from 'mongoose';
-import { CreateNodeDto } from './dto/create-node';
-import { Block } from './schemas/block.schema';
-import { Note } from './schemas/note.schema';
-import { BuildTree } from 'src/common/utils/buildTreeFileSystem';
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Node } from "./schemas/node.schema";
+import { Model } from "mongoose";
+import { CreateNodeDto } from "./dto/create-node";
+import { Block } from "./schemas/block.schema";
+import { Note } from "./schemas/note.schema";
+import { BuildTree } from "src/common/utils/buildTreeFileSystem";
 
 @Injectable()
 export class NodesService {
@@ -24,18 +24,18 @@ export class NodesService {
     });
 
     if (isTitleExist) {
-      throw new BadRequestException('the title is already used');
+      throw new BadRequestException("the title is already used");
     }
 
     if (dto.parentId) {
       const parent = await this.nodeModel.findOne({
-        type: 'folder',
+        type: "folder",
         _id: dto.parentId,
         ownerId: userId,
       });
 
       if (!parent) {
-        throw new BadRequestException('this folder does not exist');
+        throw new BadRequestException("this folder does not exist");
       }
     }
 
@@ -47,7 +47,7 @@ export class NodesService {
     });
     await newNode.save();
 
-    if (dto.type === 'note') {
+    if (dto.type === "note") {
       const newNote = new this.noteModel({
         nodeId: newNode._id,
       });
@@ -55,19 +55,41 @@ export class NodesService {
       await newNote.save();
     }
     return {
-      message: 'item created successfully',
+      message: "item created successfully",
       node: newNode,
     };
   }
-  async sortDelete(id: string, userId: string) {}
+  async sortDelete(id: string, userId: string) {
+    const node = await this.nodeModel.findOneAndUpdate(
+      {
+        _id: id,
+        ownerId: userId,
+      },
+      {
+        isTrash: true,
+      },
+      {
+        new: true,
+      },
+    );
+
+    if (!node) {
+      throw new Error("Node not found or unauthorized");
+    }
+
+    return node;
+  }
   async delete(id: string, userId: string) {}
   async handlefavorite(id: string, userId: string) {}
   async updatenode(dto: CreateNodeDto, userId: string) {}
   async getNoteTree(userId: string) {
-    const nodes = await this.nodeModel.find({ ownerId: userId });
+    const nodes = await this.nodeModel.find({
+      ownerId: userId,
+      isTrash: false,
+    });
     const sortedNodes = nodes.sort((a, b) => {
       if (a.type === b.type) return 0;
-      if (a.type === 'folder') return -1;
+      if (a.type === "folder") return -1;
       return 1;
     });
     const map = this.buildTree.buildNormalized(sortedNodes);

@@ -26,8 +26,10 @@ const Tab = ({ tab }: { tab: ITab }) => {
           removeTab(tab._id);
         }}
       >
-        <GiCancel className="text-xl hover:text-red-500 
-        cursor-pointer duration-150" />
+        <GiCancel
+          className="text-xl hover:text-red-500 
+        cursor-pointer duration-150"
+        />
       </div>
     </div>
   );

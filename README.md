@@ -1,62 +1,148 @@
-# Notion Clone Project
+#  Notion Clone – Real-time Notes Application
 
-## Description
+A high-performance, real-time Notion-like collaborative editor built using a modern full-stack TypeScript architecture. This project showcases block-based note editing, live user presence tracking, and flexible monorepo development patterns.
 
-This is a full-stack Notion-like application built for learning and practicing modern web development concepts. The project is designed to demonstrate real-time collaboration, scalable architecture, and advanced backend and frontend integration.
+##  Technologies
 
-The system allows users to create, edit, and manage notes using a block-based editor. It supports real-time updates, file uploads, and a modular architecture that can be extended with features like search, caching, and collaborative editing.
+The project is designed with a modern, decoupled, and highly scalable stack:
 
-## Tech Stack
+###  Frontend
 
-Frontend:
+- **Next.js 16** (App Router) — For static and dynamic routing, optimized rendering, and modular page layouts.
+- **React 19** — Core component hierarchy and client-side interactivity.
+- **Tailwind CSS 4** — Utility-first styling with modern PostCSS configurations for highly responsive layouts.
+- **Axios** — Robust HTTP client for structured interactions with the backend API.
+- **React Icons** — Modern vector icons.
+- **React Context API** — Light-weight client state management for active nodes, UI themes, and workspace menus.
 
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
+###  Backend
 
-Backend:
+- **NestJS 11** — Progressive Node.js framework for building efficient, testable, and highly structured microservices and APIs.
+- **Passport.js** — Secure local credentials (JWT-based) and Google OAuth 2.0 third-party authentication flows.
+- **Mongoose** — Elegant MongoDB object modeling for managing users, notes, and block structures.
+- **Socket.io / WebSockets** — Bidirectional, low-latency communication layer for real-time collaboration.
+- **Swagger API Docs** — Automated API schema generation and sandbox at `/docs` (via `@nestjs/swagger`).
 
-- NestJS
-- WebSockets
-- REST API
+###  Database & Cache
 
-Database and Infrastructure:
+- **MongoDB** — Primary document database storing persistent user accounts, note schemas, and content blocks.
+- **Redis (ioredis)** — Ultra-fast in-memory cache utilized for live user presence tracking, tracking active connection sockets, and pub/sub events.
 
-- MongoDB
-- Redis
-- Docker
+###  Tooling & Infrastructure
 
-## Features
+- **Turborepo** — High-performance monorepo build system for caching, dependency resolution, and parallel execution.
+- **Docker Compose** — Local container orchestration to run MongoDB and Redis instantly.
+- **TypeScript** — Strongly typed contract sharing across client and server.
+- **ESLint & Prettier** — Code style checking and automatic code formatting.
 
-- Block-based note editor
-- Create, update, and delete notes
-- Real-time updates using WebSockets
-- Multi-user live viewing support
-- File uploads for images and media
-- Scalable backend architecture
-- Monorepo structure using Turborepo
+---
 
-## Project Structure
+##  Quick Start
 
-apps/
-frontend
-backend
+Follow these steps to initialize the project and get your local development environment running in under 5 minutes:
 
-packages/
-shared
+### Prerequisites
 
-## Goals
+- **Node.js** (version 18 or higher)
+- **npm** (version 10 or higher)
+- **Docker Desktop** (for running MongoDB and Redis)
 
-The main goal of this project is to deeply understand:
+---
 
-- Real-time systems
-- Backend architecture design
-- Frontend rendering and state management
-- WebSocket communication
-- Caching strategies using Redis
-- Scalable application structure
+### Step 1: Clone the Repository
 
-## Notes
+```bash
+git clone https://github.com/Ahmed-175/Notion-Clone-Nestjs.git
+cd Notion-Clone-Nestjs
+```
 
-This project is intended for learning and portfolio purposes. It can be extended into a production-ready application by adding advanced features such as collaborative editing, conflict resolution, and search indexing.
+### Step 2: Initialize Configuration
+
+We provide an interactive workspace setup script. Execute it to copy sample configurations and prepare local environments:
+
+```bash
+npm run setup
+```
+
+This script automatically copies `apps/backend/.env.example` into a local `apps/backend/.env`.
+
+### Step 3: Configure Environment Variables
+
+Open the newly created `apps/backend/.env` file and set the required variables:
+
+```ini
+MONGO_URL=mongodb://localhost:27017/notion-clone
+JWT_SECRET=your-secure-jwt-signing-key
+
+# Get these from Google Cloud Console (APIs & Services > Credentials)
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+```
+
+### Step 4: Start Infrastructure Containers
+
+Launch MongoDB and Redis databases using Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+Verify that the databases are running locally on their default ports:
+
+- **MongoDB**: `27017`
+- **Redis**: `6379`
+
+### Step 5: Install Dependencies
+
+Install all package dependencies for the monorepo from the root directory:
+
+```bash
+npm install
+```
+
+### Step 6: Run in Development Mode
+
+Start both backend and frontend development servers concurrently:
+
+```bash
+npm run dev
+```
+
+- **Next.js Frontend**: [http://localhost:3000](http://localhost:3000)
+- **NestJS Backend API**: [http://localhost:8000](http://localhost:8000)
+- **Swagger API Docs Explorer**: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+### Step 7: Build for Production
+
+To build static bundles and transpile NestJS code:
+
+```bash
+npm run build
+```
+
+---
+
+##  Project Structure
+
+This monorepo uses **Turborepo** to structure and manage dependencies between apps and packages:
+
+```
+Notion-Clone/
+├── apps/
+│   ├── frontend/         # Next.js 16 Web application (Client)
+│   └── backend/          # NestJS 11 Web API & Websocket Server (Server)
+├── packages/
+│   ├── ui/               # Shared React UI component library (@repo/ui)
+│   ├── eslint-config/    # Shared lint configurations (@repo/eslint-config)
+│   └── typescript-config/# Shared TS configuration guidelines (@repo/typescript-config)
+├── docs/                 # Documentation, PRDs, and asset templates
+├── scripts/              # Workspace initialization and setup automation scripts
+├── docker-compose.yml    # Database containers configuration (Mongo + Redis)
+├── package.json          # Monorepo configuration and workspace actions
+└── turbo.json            # Turborepo build caching definitions
+```
+
+##  Contribution Guidelines
+
+We welcome contributions! Please follow these rules to ensure high-quality and consistent code.
+

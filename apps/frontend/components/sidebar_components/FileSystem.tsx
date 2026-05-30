@@ -3,7 +3,7 @@ import Recursion from "./Recursion";
 import useNodes from "@/hooks/useNodes";
 
 const FileSystem = () => {
-  const {nodes}= useNodes()
+  const { nodes } = useNodes();
   return (
     <div
       onContextMenu={(e) => {

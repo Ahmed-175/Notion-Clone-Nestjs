@@ -1,9 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsString } from "class-validator";
 
 enum NoteType {
-  FOLDER = 'folder',
-  NOTE = 'note',
+  FOLDER = "folder",
+  NOTE = "note",
 }
 
 export class CreateNodeDto {

@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const TrashPage = () => {
-  return (
-    <div>TrashPage</div>
-  )
-}
+  return <div>TrashPage</div>;
+};
 
-export default TrashPage
+export default TrashPage;

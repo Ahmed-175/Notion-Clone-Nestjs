@@ -7,9 +7,7 @@ const Recursion = ({ node }: { node: INode }) => {
   const { nodes } = useNodes();
   const [isOpen, setIsOpen] = useState(false);
 
-  const children = Object.values(nodes).filter(
-    (n) => n.parentId === node._id
-  );
+  const children = Object.values(nodes).filter((n) => n.parentId === node._id);
 
   return (
     <div className="ml-2">

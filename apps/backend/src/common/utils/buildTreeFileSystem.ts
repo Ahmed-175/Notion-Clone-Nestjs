@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { Node } from 'src/nodes/schemas/node.schema';
+import { Injectable } from "@nestjs/common";
+import { Node } from "src/nodes/schemas/node.schema";
 
 @Injectable()
 export class BuildTree {
@@ -20,12 +20,12 @@ export class BuildTree {
     });
 
     nodes.forEach((node) => {
-    const id = (node as any)._id.toString();
-    const parentId = node.parentId ? node.parentId.toString() : null;
+      const id = (node as any)._id.toString();
+      const parentId = node.parentId ? node.parentId.toString() : null;
 
-    if(parentId && map[parentId]){
-      map[parentId].children.push(id);
-    }
+      if (parentId && map[parentId]) {
+        map[parentId].children.push(id);
+      }
     });
 
     return map;

@@ -30,16 +30,15 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="w-full h-fit min-h-screen  ">
-      <MenuProvider>
-
       <NodeProvider>
-        <WorkflowProvider>
-          <WorkspaceHeader />
-          <Sidebar />
-          <div className="w-[80%] mt-20  ml-[20%] p-3">{children}</div>
-        </WorkflowProvider>
+        <MenuProvider>
+          <WorkflowProvider>
+            <WorkspaceHeader />
+            <Sidebar />
+            <div className="w-[80%] mt-20  ml-[20%] p-3">{children}</div>
+          </WorkflowProvider>
+        </MenuProvider>
       </NodeProvider>
-      </MenuProvider>
     </div>
   );
 };
