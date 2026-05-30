@@ -81,7 +81,22 @@ export class NodesService {
   }
   async delete(id: string, userId: string) {}
   async handlefavorite(id: string, userId: string) {}
-  async updatenode(dto: CreateNodeDto, userId: string) {}
+  async updatenode(title: string, id: string, userId: string) {
+    const node = await this.nodeModel.findOneAndUpdate(
+      {
+        _id: id,
+        ownerId: userId,
+      },
+      { title },
+      { new: true },
+    );
+
+    if (!node) {
+      throw new Error("Node not found or unauthorized");
+    }
+
+    return node;
+  }
   async getNoteTree(userId: string) {
     const nodes = await this.nodeModel.find({
       ownerId: userId,

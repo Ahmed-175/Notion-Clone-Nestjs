@@ -12,6 +12,7 @@ import {
 import { NodesService } from "./nodes.service";
 import { JwtGuard } from "src/common/guards/jwt.guard";
 import { CreateNodeDto } from "./dto/create-node";
+import { UpdateNodeDto } from "./dto/update-node";
 
 @UseGuards(JwtGuard)
 @Controller("nodes")
@@ -25,10 +26,12 @@ export class NodesController {
 
   @Put(":id")
   async updateNode(
-    @Body() dto: CreateNodeDto,
+    @Body() dto: UpdateNodeDto,
     @Param("id") id: string,
     @Request() req,
-  ) {}
+  ) {
+    return await this.nodesService.updatenode(dto.title, id, req.user._id);
+  }
   @Delete(":id")
   async softDeleteNode(@Param("id") id: string, @Request() req) {
     return await this.softDeleteNode(id, req.user._id);

@@ -5,6 +5,7 @@ export const endpoints = {
   nodes: {
     create: "/nodes/create",
     get: "/nodes",
+    update: (id: string) => `/nodes/${id}`,
   },
   picture: "http://localhost:8000/uploads/users",
   uplaodPicture: "/users/upload",
