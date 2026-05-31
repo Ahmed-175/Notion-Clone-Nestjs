@@ -49,7 +49,7 @@ const Page = () => {
         e.stopPropagation();
         showMenu(currentFolder, e.clientX, e.clientY);
       }}
-      className="relative min-h-[80vh]"
+      className="relative min-h-[80vh] p-3.5"
     >
       <h1 className="w-full text-4xl mb-9 font-bold text-center">
         Home Page

@@ -16,6 +16,7 @@ export interface INote {
   isTrash: boolean;
   banner: string;
   nodeId: string;
+  content: string | "";
   tags: string[];
   font_family: Fonts;
   public: boolean;

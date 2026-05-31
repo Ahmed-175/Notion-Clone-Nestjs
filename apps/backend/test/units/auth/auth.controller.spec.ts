@@ -1,12 +1,13 @@
 import { UsersService } from "src/users/users.service";
-import { AuthController } from "./auth.controller";
+import { AuthController } from "../../../src/auth/auth.controller";
 import { Test, TestingModule } from "@nestjs/testing";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
-import { LoginAuthDto } from "./dto/login-user.dto";
+import { LoginAuthDto } from "../../../src/auth/dto/login-user.dto";
 
 describe("AuthController", () => {
   let controller: AuthController;
   let usersService: UsersService;
+  let module: TestingModule;
 
   const mockUserService = {
     create: jest.fn(),
@@ -15,7 +16,7 @@ describe("AuthController", () => {
     me: jest.fn(),
   };
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       controllers: [AuthController],
       providers: [
         {
@@ -29,8 +30,10 @@ describe("AuthController", () => {
     usersService = module.get<UsersService>(UsersService);
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    await module.close();
   });
 
   it("should be defined", () => {
