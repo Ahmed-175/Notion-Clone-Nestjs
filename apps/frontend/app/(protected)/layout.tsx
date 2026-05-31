@@ -34,8 +34,9 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
         <MenuProvider>
           <WorkflowProvider>
             <WorkspaceHeader />
+            
             <Sidebar />
-            <div className="w-[80%] mt-20  ml-[20%] p-3">{children}</div>
+            <div className="w-[81%] mt-20  ml-[20%] p-0">{children}</div>
           </WorkflowProvider>
         </MenuProvider>
       </NodeProvider>

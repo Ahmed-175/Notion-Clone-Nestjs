@@ -10,7 +10,7 @@ export const register = async ({
   password: string;
   username: string;
 }) => {
-  const res = await axiosInstance.post(endpoints.register, {
+  const res = await axiosInstance.post(endpoints.user.register, {
     username,
     email,
     password,
@@ -26,7 +26,7 @@ export const login = async ({
   email: string;
   password: string;
 }) => {
-  const res = await axiosInstance.post(endpoints.login, {
+  const res = await axiosInstance.post(endpoints.user.login, {
     email,
     password,
   });

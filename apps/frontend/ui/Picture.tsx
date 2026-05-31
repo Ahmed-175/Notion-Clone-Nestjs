@@ -83,7 +83,7 @@ const Picture = ({
         alt="picture"
         height={2000}
         className="w-10 h-10 object-cover rounded-full"
-        src={`${endpoints.picture}/${endpoint}`}
+        src={`${endpoints.user.picture}/${endpoint}`}
       />
     </div>
   );

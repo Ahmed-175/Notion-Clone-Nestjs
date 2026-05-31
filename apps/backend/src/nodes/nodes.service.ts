@@ -3,7 +3,6 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Node } from "./schemas/node.schema";
 import { Model } from "mongoose";
 import { CreateNodeDto } from "./dto/create-node";
-import { Block } from "./schemas/block.schema";
 import { Note } from "./schemas/note.schema";
 import { BuildTree } from "src/common/utils/buildTreeFileSystem";
 
@@ -12,7 +11,6 @@ export class NodesService {
   constructor(
     @InjectModel(Node.name) private nodeModel: Model<Node>,
     @InjectModel(Note.name) private noteModel: Model<Note>,
-    @InjectModel(Block.name) private blockModel: Model<Block>,
     private readonly buildTree: BuildTree,
   ) {}
 

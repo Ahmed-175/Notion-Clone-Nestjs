@@ -1,8 +1,19 @@
-import useTab from "@/hooks/useTab";
+import Banner from "@/components/Note/Banner";
+import Properties from "@/components/Note/Properties";
+import TitleNote from "@/components/Note/TitleNote";
+import useNote from "@/hooks/useNote";
 
 const NotePage = () => {
-  const { currentTab } = useTab();
-  return <div>{currentTab.name}</div>;
+  const { note } = useNote();
+
+
+  return (
+    <div>
+      <Banner />
+      <TitleNote />
+      <Properties />
+    </div>
+  );
 };
 
 export default NotePage;

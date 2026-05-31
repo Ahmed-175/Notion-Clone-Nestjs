@@ -12,4 +12,8 @@ export const nodeService = {
   update: (id: string, data: { title: string }) => {
     return axiosInstance.put(endpoints.nodes.update(id), data);
   },
+  getNodes: async () => {
+    const res = await axiosInstance.get(endpoints.nodes.get);
+    return res.data;
+  },
 };

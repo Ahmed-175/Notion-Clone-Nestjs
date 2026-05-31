@@ -1,4 +1,5 @@
 import useToast from "@/hooks/useToast";
+import { nodeService } from "@/services/node.service";
 import { getNodes } from "@/services/user.service";
 import { INode } from "@/types/node.type";
 import {
@@ -28,7 +29,7 @@ const NodeProvider = ({ children }: { children: ReactNode }) => {
       setLoading(true);
 
       try {
-        const data = await getNodes();
+        const data = await nodeService.getNodes();
         setNodes(data.map);
       } catch (error) {
         showMgs({

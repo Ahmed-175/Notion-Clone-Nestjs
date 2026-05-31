@@ -21,13 +21,9 @@ describe("Auth Module E2E Testing", () => {
 
     await app.init();
 
-    // Clean up test user in case it already exists in the database
     const connection = app.get(getConnectionToken());
     await connection.collection("users").deleteMany({
-      $or: [
-        { email: "test@gmail.com" },
-        { username: "test123" }
-      ]
+      $or: [{ email: "test@gmail.com" }, { username: "test123" }],
     });
 
     agent = request.agent(app.getHttpServer());

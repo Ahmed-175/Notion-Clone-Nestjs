@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { Node } from "./node.schema";
-import { Block, BlockSchema } from "./block.schema";
 
 enum Fonts {
   DEFAULT = "default",
@@ -32,8 +31,8 @@ export class Note {
   font_size: number;
   @Prop({ default: "en" })
   lang: "en" | "ar";
-  @Prop({ type: [BlockSchema], default: [] })
-  blocks: Block[];
+  @Prop({ default: "" })
+  content: string;
 }
 
 export const noteSchema = SchemaFactory.createForClass(Note);

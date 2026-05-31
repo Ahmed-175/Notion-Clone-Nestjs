@@ -1,28 +1,80 @@
 "use client";
 
-import useTab from "@/hooks/useTab";
-import CommunityPage from "@/pages/CommunityPage";
-import FavoritesPage from "@/pages/FavoritesPage";
-import HomePage from "@/pages/HomePage";
-import NotePage from "@/pages/NotePage";
-import SearchPage from "@/pages/SearchPage";
-import TrashPage from "@/pages/TrashPage";
+import { useMemo, useState } from "react";
+import { IoChevronBackCircleOutline } from "react-icons/io5";
 
-const components = {
-  home: HomePage,
-  note: NotePage,
-  trash: TrashPage,
-  favorites: FavoritesPage,
-  search: SearchPage,
-  community: CommunityPage,
+import NodeHomePage from "@/components/homePage/NodeHomePage";
+import useMenu from "@/hooks/useMenu";
+import useNodes from "@/hooks/useNodes";
+import { INode } from "@/types/node.type";
+
+const home: INode = {
+  title: "main folder",
+  _id: null,
+  type: "folder",
+  isFavorite: false,
+  isTrash: false,
+  parentId: null,
+  children: [],
 };
 
 const Page = () => {
-  const { currentTab } = useTab();
+  const { nodes } = useNodes();
+  const { showMenu } = useMenu();
 
-  const Component = components[currentTab.type] || HomePage;
+  const [path, setPath] = useState<INode[]>([]);
 
-  return <Component />;
+  const currentFolder = path.length > 0 ? path[path.length - 1] : home;
+
+  const currentNodes = useMemo(() => {
+    return Object.values(nodes).filter((node) => {
+      return node.parentId === currentFolder._id;
+    });
+  }, [nodes, currentFolder]);
+
+  const handleOpenFolder = (node: INode) => {
+    if (node.type === "folder") {
+      setPath((prev) => [...prev, node]);
+    }
+  };
+
+  const handleBack = () => {
+    setPath((prev) => prev.slice(0, -1));
+  };
+
+  return (
+    <div
+      onContextMenu={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        showMenu(currentFolder, e.clientX, e.clientY);
+      }}
+      className="relative min-h-[80vh]"
+    >
+      <h1 className="w-full text-4xl mb-9 font-bold text-center">
+        Home Page
+      </h1>
+
+      {path.length > 0 && (
+        <div
+          onClick={handleBack}
+          className="absolute right-10 top-0 flex h-fit w-fit cursor-pointer items-center justify-center rounded-lg bg-black p-2 text-2xl text-white duration-150 hover:scale-[1.1]"
+        >
+          <IoChevronBackCircleOutline />
+        </div>
+      )}
+
+      <div className="flex h-fit w-full flex-wrap gap-3">
+        {currentNodes.map((node) => (
+          <NodeHomePage
+            key={String(node._id)}
+            node={node}
+            onOpenFolder={handleOpenFolder}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Page;
