@@ -1,5 +1,5 @@
 import useTab from "@/hooks/useTab";
-import { ITab } from "@/types/tab.type";
+import { ITab } from "@/types/workflow.type";
 import { FiHome } from "react-icons/fi";
 import { GiCancel } from "react-icons/gi";
 import { usePathname } from "next/navigation";

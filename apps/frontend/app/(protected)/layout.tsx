@@ -4,10 +4,10 @@ import useAuth from "@/hooks/useAuth";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
-import WorkspaceHeader from "@/components/WorkspaceHeader/WorkspaceHeader";
-import WorkflowProvider from "@/context/workflowContext";
 import NodeProvider from "@/context/nodeContext";
 import MenuProvider from "@/context/menuContext";
+import { WorkSpaceProvider } from "@/features/workspace/contexts/workspace.context";
+import WorkspaceHeader from "@/features/workspace/components/WorkSpaceHeader";
 
 const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
@@ -32,12 +32,12 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="w-full h-fit min-h-screen overflow-x-hidden">
       <NodeProvider>
         <MenuProvider>
-          <WorkflowProvider>
+          <WorkSpaceProvider>
             <WorkspaceHeader />
 
             <Sidebar />
             <div className="w-[81%] mt-20  ml-[20%] p-0">{children}</div>
-          </WorkflowProvider>
+          </WorkSpaceProvider>
         </MenuProvider>
       </NodeProvider>
     </div>

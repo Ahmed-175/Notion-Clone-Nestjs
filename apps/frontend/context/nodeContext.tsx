@@ -1,6 +1,5 @@
 import useToast from "@/hooks/useToast";
 import { nodeService } from "@/services/node.service";
-import { getNodes } from "@/services/user.service";
 import { INode } from "@/types/node.type";
 import {
   createContext,

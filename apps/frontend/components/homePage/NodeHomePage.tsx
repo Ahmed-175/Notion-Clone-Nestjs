@@ -1,7 +1,6 @@
 "use client"
 import useMenu from "@/hooks/useMenu";
 import useNodes from "@/hooks/useNodes";
-import useTab from "@/hooks/useTab";
 import { INode } from "@/types/node.type";
 import { IoFolderOutline } from "react-icons/io5";
 import { LuNewspaper } from "react-icons/lu";
@@ -16,21 +15,12 @@ const NodeHomePage = ({
   onOpenFolder: (node: INode) => void;
 }) => {
   const { nodes } = useNodes();
-  const { addTab } = useTab();
   const router = useRouter();
   const { showMenu } = useMenu();
 
   const handleClick = (node: INode) => {
     if (node.type === "note") {
-      addTab({
-        name: node.title,
-        type: "note",
-        _id: node._id as any,
-        href : `/note/${node._id}`,
-      });
-
       router.push(`/note/${node._id}`)
-
     }
 
     if (node.type === "folder") {
