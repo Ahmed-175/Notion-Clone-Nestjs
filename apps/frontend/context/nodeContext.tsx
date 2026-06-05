@@ -28,7 +28,7 @@ const NodeProvider = ({ children }: { children: ReactNode }) => {
       setLoading(true);
 
       try {
-        const data = await nodeService.getNodes();
+        const data: any = await nodeService.getNodes();
         setNodes(data.map);
       } catch (error) {
         showMgs({

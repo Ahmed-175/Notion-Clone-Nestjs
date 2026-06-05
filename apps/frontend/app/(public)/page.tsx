@@ -20,8 +20,7 @@ const page = () => {
     }
     setLoading(true);
     try {
-      const data = await login(form);
-      localStorage.setItem("access_token", data.token);
+      await login(form);
       showMgs({ type: "success", message: "login user is success" });
     } catch (error: any) {
       showMgs({ type: "error", message: error.response.data.message });

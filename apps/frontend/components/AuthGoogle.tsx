@@ -3,7 +3,7 @@ import Link from "next/link";
 const AuthGoogle = () => {
   return (
     <Link
-      href={"http://localhost:8000/auth/google"}
+      href={"http://localhost:8000/api/auth/google"}
       className={`w-full p-3  hover:bg-gray-700 cursor-pointer
          rounded-lg text-white gap-4 mt-5  text-xl mb-6 duration-150 flex 
          justify-center items-center bg-black `}

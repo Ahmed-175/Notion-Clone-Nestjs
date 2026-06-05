@@ -8,11 +8,11 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
     super({
       clientID: process.env.GOOGLE_CLIENT_ID || "dummy-client-id",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "dummy-client-secret",
-      callbackURL: "http://localhost:8000/auth/google/callback",
+      callbackURL: "http://localhost:8000/api/auth/google/callback",
       scope: ["email", "profile"],
     });
   }
-  async validate(
+  validate(
     accessToken: string,
     refreshToken: string,
     profile: any,

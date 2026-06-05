@@ -8,6 +8,7 @@ import NodeProvider from "@/context/nodeContext";
 import MenuProvider from "@/context/menuContext";
 import { WorkSpaceProvider } from "@/features/workspace/contexts/workspace.context";
 import WorkspaceHeader from "@/features/workspace/components/WorkSpaceHeader";
+import ReactQueryProvider from "@/providers/react-query.provider";
 
 const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
@@ -30,16 +31,18 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="w-full h-fit min-h-screen overflow-x-hidden">
-      <NodeProvider>
-        <MenuProvider>
-          <WorkSpaceProvider>
-            <WorkspaceHeader />
+      <ReactQueryProvider>
+        <NodeProvider>
+          <MenuProvider>
+            <WorkSpaceProvider>
+              <WorkspaceHeader />
+              <Sidebar />
+              <div className="w-[81%] mt-20  ml-[20%] p-0">{children}</div>
+            </WorkSpaceProvider>
+          </MenuProvider>
+        </NodeProvider>
+      </ReactQueryProvider>
 
-            <Sidebar />
-            <div className="w-[81%] mt-20  ml-[20%] p-0">{children}</div>
-          </WorkSpaceProvider>
-        </MenuProvider>
-      </NodeProvider>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 export interface INode {
-  _id?: string | null;
+  _id: string;
   title: string;
   type: "folder" | "note";
   isFavorite: boolean;

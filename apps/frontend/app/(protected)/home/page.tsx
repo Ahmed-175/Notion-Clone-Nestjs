@@ -8,9 +8,9 @@ import useMenu from "@/hooks/useMenu";
 import useNodes from "@/hooks/useNodes";
 import { INode } from "@/types/node.type";
 
-const home: INode = {
+const home = {
   title: "main folder",
-  _id: null,
+  _id : null,
   type: "folder",
   isFavorite: false,
   isTrash: false,
@@ -47,7 +47,7 @@ const Page = () => {
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        showMenu(currentFolder, e.clientX, e.clientY);
+        showMenu(currentFolder as any, e.clientX, e.clientY);
       }}
       className="relative min-h-[80vh] p-3.5"
     >

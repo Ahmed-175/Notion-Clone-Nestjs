@@ -1,4 +1,4 @@
-import axiosInstance from "@/api/axiosInstance";
+import axiosInstance from "@/shared/lib/axiosInstance";
 import { endpoints } from "@/api/endpoints";
 
 export const register = async ({
@@ -10,7 +10,7 @@ export const register = async ({
   password: string;
   username: string;
 }) => {
-  const res = await axiosInstance.post(endpoints.user.register, {
+  const res: any = await axiosInstance.post(endpoints.user.register, {
     username,
     email,
     password,
@@ -26,7 +26,7 @@ export const login = async ({
   email: string;
   password: string;
 }) => {
-  const res = await axiosInstance.post(endpoints.user.login, {
+  const res: any = await axiosInstance.post(endpoints.user.login, {
     email,
     password,
   });
@@ -35,7 +35,7 @@ export const login = async ({
 };
 
 export const me = async () => {
-  const res = await axiosInstance.get("/auth/me");
+  const res : any = await axiosInstance.get("/auth/me");
 
   return res.data;
 };

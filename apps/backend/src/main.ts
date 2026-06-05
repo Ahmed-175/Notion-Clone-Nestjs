@@ -11,6 +11,8 @@ async function bootstrap() {
     prefix: "/uploads/",
   });
 
+  app.setGlobalPrefix("api");
+
   const config = new DocumentBuilder();
   config
     .setTitle("Notion Clone API")
@@ -22,7 +24,7 @@ async function bootstrap() {
   const docs = SwaggerModule.createDocument(app, config as any);
   SwaggerModule.setup("docs", app, docs);
   app.enableCors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "http://localhost"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],

@@ -4,7 +4,7 @@ import AuthGoogle from "@/components/AuthGoogle";
 import useToast from "@/hooks/useToast";
 import { register } from "@/services/auth.service";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const page = () => {
   const { showMgs } = useToast();
@@ -21,8 +21,7 @@ const page = () => {
     }
     setLoading(true);
     try {
-      const data = await register(form);
-      localStorage.setItem("access_token", data.token);
+      await register(form);
       showMgs({ type: "success", message: "register user is success" });
     } catch (error: any) {
       console.error(error);

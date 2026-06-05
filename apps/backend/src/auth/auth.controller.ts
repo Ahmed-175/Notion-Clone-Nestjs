@@ -22,7 +22,7 @@ export class AuthController {
 
   @Get("google")
   @UseGuards(AuthGuard("google"))
-  async googleAuth() {
+  googleAuth() {
     return;
   }
 

@@ -1,4 +1,4 @@
-import axiosInstance from "@/api/axiosInstance";
+import axiosInstance from "@/shared/lib/axiosInstance";
 import { endpoints } from "@/api/endpoints";
 
 export const nodeService = {
@@ -13,7 +13,7 @@ export const nodeService = {
     return axiosInstance.put(endpoints.nodes.update(id), data);
   },
   getNodes: async () => {
-    const res = await axiosInstance.get(endpoints.nodes.get);
+    const res : any = await axiosInstance.get(endpoints.nodes.get);
     return res.data;
   },
 };

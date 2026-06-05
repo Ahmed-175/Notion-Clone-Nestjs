@@ -20,6 +20,7 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
+    "strict": false,
     "strictPropertyInitialization": false,
     "noFallthroughCasesInSwitch": false,
     "types": ["node" , "jest"]

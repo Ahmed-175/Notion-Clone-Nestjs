@@ -20,7 +20,7 @@ export const menuContext = createContext<IMenuContext | null>(null);
 
 const MenuProvider = ({ children }: { children: React.ReactNode }) => {
   const [openMenu, setOpenMenu] = useState(false);
-  const home: INode = {
+  const home: any = {
     title: "main folder",
     _id: null,
     type: "folder",

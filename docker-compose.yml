@@ -1,25 +1,55 @@
-version: '3.8'
+version: "3.8"
+
 services:
-  mongodb: 
+
+  mongodb:
     image: mongo:latest
     container_name: mongodb_container
     ports:
       - "27017:27017"
-    restart : always
+    restart: always
     volumes:
       - mongo_data:/data/db
+
   redis:
     image: redis:7
     container_name: redis_container
-
-    restart: always
     ports:
       - "6379:6379"
+    restart: always
     volumes:
       - redis_data:/data
+
+  backend:
+    build: ./apps/backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/notion
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=your-jwt-secret
+    depends_on:
+      - mongodb
+      - redis
+
+  frontend:
+    build: ./apps/frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+      - backend
+
 volumes:
   mongo_data:
   redis_data:
-
-    
-      
