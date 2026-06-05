@@ -2,6 +2,16 @@
 
 A high-performance, real-time Notion-like collaborative editor built using a modern full-stack TypeScript architecture. This project showcases block-based note editing, live user presence tracking, and flexible monorepo development patterns.
 
+##  Screenshots
+
+| Authentication Page | Home Page |
+| :---: | :---: |
+| ![Authentication Page](docs/assets/auth-page.png) | ![Home Page](docs/assets/home-page.png) |
+
+| Folder View | Note Editor |
+| :---: | :---: |
+| ![Folder View](docs/assets/folder.png) | ![Note Editor](docs/assets/note-page.png) |
+
 ##  Technologies
 
 The project is designed with a modern, decoupled, and highly scalable stack:
