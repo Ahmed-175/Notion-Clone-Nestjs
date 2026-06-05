@@ -4,7 +4,7 @@ import useToast from "@/hooks/useToast";
 import { INode } from "@/types/node.type";
 
 const useNodeActions = () => {
-  const { setNodes, nodes } = useNodes();
+  const { setNodes } = useNodes();
   const { showMgs } = useToast();
   const addNode = async (
     title: string,

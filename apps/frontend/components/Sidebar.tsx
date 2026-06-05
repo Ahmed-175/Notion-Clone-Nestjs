@@ -2,11 +2,11 @@
 import Info from "./sidebar_components/Info";
 import Links from "./sidebar_components/Links";
 import RecentFiles from "./sidebar_components/RecentFiles";
-import FileSystem from "./sidebar_components/FileSystem";
-import useNodes from "@/hooks/useNodes";
+import { useNodes } from "@/features/nodes/hooks/useNodes";
+import NodesList from "@/features/nodes/components/NodesList";
 
 const Sidebar = () => {
-  const { loading } = useNodes();
+  const { isLoading } = useNodes();
 
   return (
     <div
@@ -21,7 +21,7 @@ const Sidebar = () => {
       <div className=" h-fit  scroll-auto">
         <div className="text-lg text-gray-600 my-1">folders & files </div>
 
-        {!loading && <FileSystem />}
+        {!isLoading && <NodesList />}
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ export const endpoints = {
     login: "/auth/login",
     register: "/auth/register",
     me: "/auth/me",
-    picture: "http://localhost:8000/uploads/users",
+    picture: `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/users`,
     uplaodPicture: "/users/upload",
   },
   nodes: {
@@ -14,6 +14,7 @@ export const endpoints = {
 
   notes: {
     get: (id: string) => `/notes/${id}`,
-    banner: (url: string) => `http://localhost:8000/uploads/banners/${url}`,
+    banner: (url: string) =>
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/banners/${url}`,
   },
 };

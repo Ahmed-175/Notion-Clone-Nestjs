@@ -1,10 +1,10 @@
 import { INode } from "@/types/node.type";
-import Node from "./Node";
-import useNodes from "@/hooks/useNodes";
 import { useState } from "react";
+import Node from "./Node";
+import { useNodes } from "../hooks/useNodes";
 
 const Recursion = ({ node }: { node: INode }) => {
-  const { nodes } = useNodes();
+  const { data: nodes } = useNodes();
   const [isOpen, setIsOpen] = useState(false);
 
   const children = Object.values(nodes).filter((n) => n.parentId === node._id);
