@@ -4,6 +4,8 @@ const path = require('path');
 const rootDir = path.join(__dirname, '..');
 const backendEnvExample = path.join(rootDir, 'apps', 'backend', '.env.example');
 const backendEnv = path.join(rootDir, 'apps', 'backend', '.env');
+const frontendEnvExample = path.join(rootDir, 'apps', 'frontend', '.env.example');
+const frontendEnv = path.join(rootDir, 'apps', 'frontend', '.env.local');
 
 console.log('Starting Notion Clone workspace setup...');
 
@@ -15,6 +17,15 @@ try {
     console.log('✓ apps/backend/.env successfully created!');
   } else {
     console.log('✓ apps/backend/.env already exists. Skipping copy.');
+  }
+
+  // Check if frontend environment file exists
+  if (!fs.existsSync(frontendEnv)) {
+    console.log(`Copying apps/frontend/.env.example to apps/frontend/.env.local...`);
+    fs.copyFileSync(frontendEnvExample, frontendEnv);
+    console.log('✓ apps/frontend/.env.local successfully created!');
+  } else {
+    console.log('✓ apps/frontend/.env.local already exists. Skipping copy.');
   }
 
   console.log('\nWorkspace setup is complete!');

@@ -74,11 +74,13 @@ We provide an interactive workspace setup script. Execute it to copy sample conf
 npm run setup
 ```
 
-This script automatically copies `apps/backend/.env.example` into a local `apps/backend/.env`.
+This script automatically copies `apps/backend/.env.example` into `apps/backend/.env` and `apps/frontend/.env.example` into `apps/frontend/.env.local`.
 
 ### Step 3: Configure Environment Variables
 
-Open the newly created `apps/backend/.env` file and set the required variables:
+#### Backend Configuration
+
+Open `apps/backend/.env` and set the required variables:
 
 ```ini
 MONGO_URL=mongodb://localhost:27017/notion-clone
@@ -87,6 +89,14 @@ JWT_SECRET=your-secure-jwt-signing-key
 # Get these from Google Cloud Console (APIs & Services > Credentials)
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
+```
+
+#### Frontend Configuration
+
+Open `apps/frontend/.env.local` and ensure the backend URL is correct:
+
+```ini
+NEXT_PUBLIC_BACKEND_URL=http://localhost:8000/api
 ```
 
 ### Step 4: Start Infrastructure Containers
