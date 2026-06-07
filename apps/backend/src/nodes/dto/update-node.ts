@@ -1,22 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString } from "class-validator";
-import { NoteType } from "./create-node";
-import { Optional } from "@nestjs/common";
+import { IsNotEmpty, IsString } from "class-validator";
 
 export class UpdateNodeDto {
 
   @IsString()
-  @Optional()
+  @IsNotEmpty()
   @ApiProperty()
   title: string;
-
-  @Optional()
-  @IsString()
-  @ApiProperty()
-  type: NoteType;
-
-  @Optional()
-  @IsString()
-  @ApiProperty()
-  parentId: string | null;
 }
