@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
   Request,
@@ -32,9 +33,10 @@ export class NodesController {
   ) {
     return await this.nodesService.updatenode(dto.title, id, req.user._id);
   }
+  
   @Delete(":id")
   async softDeleteNode(@Param("id") id: string, @Request() req) {
-    return await this.softDeleteNode(id, req.user._id);
+    return await this.nodesService.sortDelete(id, req.user._id);
   }
 
   @Get("")
@@ -42,6 +44,8 @@ export class NodesController {
     return await this.nodesService.getNoteTree(req.user._id);
   }
 
-  @Get(":id")
-  async isFavorite(@Request() req, @Param("id") id: string) {}
+  @Patch(":id/favorite")
+  async toggleFavorite(@Param("id") id: string, @Request() req) {
+    return await this.nodesService.handlefavorite(id, req.user._id);
+  }
 }

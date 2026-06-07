@@ -12,102 +12,153 @@ export class NodesService {
     @InjectModel(Node.name) private nodeModel: Model<Node>,
     @InjectModel(Note.name) private noteModel: Model<Note>,
     private readonly buildTree: BuildTree,
-  ) {}
+  ) { }
 
   async create(dto: CreateNodeDto, userId: string) {
-    const isTitleExist = await this.nodeModel.findOne({
-      parentId: dto.parentId,
-      title: dto.title,
-      ownerId: userId,
-    });
+    try {
 
-    if (isTitleExist) {
-      throw new BadRequestException("the title is already used");
-    }
-
-    if (dto.parentId) {
-      const parent = await this.nodeModel.findOne({
-        type: "folder",
-        _id: dto.parentId,
+      const isTitleExist = await this.nodeModel.findOne({
+        parentId: dto.parentId,
+        title: dto.title,
         ownerId: userId,
       });
 
-      if (!parent) {
-        throw new BadRequestException("this folder does not exist");
+      if (isTitleExist) {
+        throw new BadRequestException("the title is already used");
       }
-    }
 
-    const newNode = new this.nodeModel({
-      type: dto.type,
-      title: dto.title,
-      parentId: dto.parentId,
-      ownerId: userId,
-    });
-    await newNode.save();
+      if (dto.parentId) {
+        const parent = await this.nodeModel.findOne({
+          type: "folder",
+          _id: dto.parentId,
+          ownerId: userId,
+        });
 
-    if (dto.type === "note") {
-      const newNote = new this.noteModel({
-        nodeId: newNode._id,
+        if (!parent) {
+          throw new BadRequestException("this folder does not exist");
+        }
+      }
+
+      const newNode = new this.nodeModel({
+        type: dto.type,
+        title: dto.title,
+        parentId: dto.parentId,
+        ownerId: userId,
       });
+      await newNode.save();
 
-      await newNote.save();
+      if (dto.type === "note") {
+        const newNote = new this.noteModel({
+          nodeId: newNode._id,
+        });
+
+        await newNote.save();
+      }
+      return {
+        message: "item created successfully",
+        node: newNode,
+      };
+    } catch (error) {
+      return { errorMessage: error }
     }
-    return {
-      message: "item created successfully",
-      node: newNode,
-    };
   }
+
   async sortDelete(id: string, userId: string) {
-    const node = await this.nodeModel.findOneAndUpdate(
-      {
-        _id: id,
-        ownerId: userId,
-      },
-      {
-        isTrash: true,
-      },
-      {
-        new: true,
-      },
-    );
+    try {
+      const node = await this.nodeModel.findOneAndUpdate(
+        {
+          _id: id,
+          ownerId: userId,
+          isTrash: false,
+        },
+        {
+          isTrash: true,
+        },
+        {
+          new: true,
+        },
+      );
 
-    if (!node) {
-      throw new Error("Node not found or unauthorized");
+      if (!node) {
+        return { errorMessage: "Node not found or unauthorized" };
+      }
+      return node;
+    } catch (error) {
+      return { errorMessage: error }
     }
-
-    return node;
   }
-  async delete(id: string, userId: string) {}
-  async handlefavorite(id: string, userId: string) {}
+
+  async delete(id: string, userId: string) {
+    try {
+      const result = await this.nodeModel.deleteOne({ _id: id, ownerId: userId })
+
+      if (result.deletedCount === 0) {
+        throw new BadRequestException("Node not found or unauthorized");
+      }
+      return { message: "Node permanently deleted" };
+    } catch (error) {
+      return { errorMessage: error }
+    }
+  }
+
+  async handlefavorite(id: string, userId: string) {
+    try {
+      const node = await this.nodeModel.findOne({ _id: id, ownerId: userId });
+
+      if (!node) {
+        throw new BadRequestException("Node not found or unauthorized")
+      }
+
+      node.isFavorite = !node.isFavorite;
+      await node.save();
+
+      return {
+        message: node.isFavorite ? "Added to favorites" : "Removed from favorites",
+        node,
+      };
+    } catch (error) {
+      return { errorMessage: error }
+    }
+  }
+
   async updatenode(title: string, id: string, userId: string) {
-    const node = await this.nodeModel.findOneAndUpdate(
-      {
-        _id: id,
-        ownerId: userId,
-      },
-      { title },
-      { new: true },
-    );
+    try {
+      const node = await this.nodeModel.findOneAndUpdate(
+        {
+          _id: id,
+          ownerId: userId,
+        },
+        { title },
+        { new: true },
+      );
 
-    if (!node) {
-      throw new Error("Node not found or unauthorized");
+      if (!node) {
+        return { errorMessage: "Node not found or unauthorized" };
+      }
+
+      return node;
+    } catch (error) {
+      return { errorMessage: error }
     }
-
-    return node;
   }
+
   async getNoteTree(userId: string) {
-    const nodes = await this.nodeModel.find({
-      ownerId: userId,
-      isTrash: false,
-    });
-    const sortedNodes = nodes.sort((a, b) => {
-      if (a.type === b.type) return 0;
-      if (a.type === "folder") return -1;
-      return 1;
-    });
-    const map = this.buildTree.buildNormalized(sortedNodes);
-    return {
-      map,
-    };
+    try {
+      const nodes = await this.nodeModel.find({
+        ownerId: userId,
+        isTrash: false,
+      });
+      const sortedNodes = nodes.sort((a, b) => {
+        if (a.type === b.type) return 0;
+        if (a.type === "folder") return -1;
+        return 1;
+      });
+      const map = this.buildTree.buildNormalized(sortedNodes);
+      return {
+        map,
+      };
+    } catch (error) {
+      return { errorMessage: error }
+    }
   }
 }
