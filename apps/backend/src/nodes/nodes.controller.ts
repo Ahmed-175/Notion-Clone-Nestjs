@@ -33,7 +33,7 @@ export class NodesController {
   ) {
     return await this.nodesService.updatenode(dto.title, id, req.user._id);
   }
-  
+
   @Delete(":id")
   async softDeleteNode(@Param("id") id: string, @Request() req) {
     return await this.nodesService.sortDelete(id, req.user._id);

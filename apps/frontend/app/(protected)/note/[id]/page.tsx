@@ -10,20 +10,18 @@ import { useEffect } from "react";
 const page = () => {
     const { note } = useNote();
     const { setLabel } = useTab();
+    // console.log(note);
 
     useEffect(() => {
-        if (!note?._id) return;
-
-        if (!note?.title) {
-            setLabel(note._id, "loading");
-            return;
-        }
-
-        setLabel(note._id, note.title);
-
+        // console.log(note._id, note.title);
+        // console.log(note._id);
+        // setLabel(note._id, note.title);
     }, [note?._id, note?.title, setLabel]);
 
-    console.log(note);
+    useEffect(() => {
+        console.log("hello world ");
+    }, [])
+
     return (
         <div>
             <Banner />

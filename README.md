@@ -1,22 +1,22 @@
-#  Notion Clone – Real-time Notes Application
+# Notion Clone – Real-time Notes Application
 
 A high-performance, real-time Notion-like collaborative editor built using a modern full-stack TypeScript architecture. This project showcases block-based note editing, live user presence tracking, and flexible monorepo development patterns.
 
-##  Screenshots
+## Screenshots
 
-| Authentication Page | Home Page |
-| :---: | :---: |
+|                Authentication Page                |                Home Page                |
+| :-----------------------------------------------: | :-------------------------------------: |
 | ![Authentication Page](docs/assets/auth-page.png) | ![Home Page](docs/assets/home-page.png) |
 
-| Folder View | Note Editor |
-| :---: | :---: |
+|              Folder View               |                Note Editor                |
+| :------------------------------------: | :---------------------------------------: |
 | ![Folder View](docs/assets/folder.png) | ![Note Editor](docs/assets/note-page.png) |
 
-##  Technologies
+## Technologies
 
 The project is designed with a modern, decoupled, and highly scalable stack:
 
-###  Frontend
+### Frontend
 
 - **Next.js 16** (App Router) — For static and dynamic routing, optimized rendering, and modular page layouts.
 - **React 19** — Core component hierarchy and client-side interactivity.
@@ -25,7 +25,7 @@ The project is designed with a modern, decoupled, and highly scalable stack:
 - **React Icons** — Modern vector icons.
 - **React Context API** — Light-weight client state management for active nodes, UI themes, and workspace menus.
 
-###  Backend
+### Backend
 
 - **NestJS 11** — Progressive Node.js framework for building efficient, testable, and highly structured microservices and APIs.
 - **Passport.js** — Secure local credentials (JWT-based) and Google OAuth 2.0 third-party authentication flows.
@@ -33,12 +33,12 @@ The project is designed with a modern, decoupled, and highly scalable stack:
 - **Socket.io / WebSockets** — Bidirectional, low-latency communication layer for real-time collaboration.
 - **Swagger API Docs** — Automated API schema generation and sandbox at `/docs` (via `@nestjs/swagger`).
 
-###  Database & Cache
+### Database & Cache
 
 - **MongoDB** — Primary document database storing persistent user accounts, note schemas, and content blocks.
 - **Redis (ioredis)** — Ultra-fast in-memory cache utilized for live user presence tracking, tracking active connection sockets, and pub/sub events.
 
-###  Tooling & Infrastructure
+### Tooling & Infrastructure
 
 - **Turborepo** — High-performance monorepo build system for caching, dependency resolution, and parallel execution.
 - **Docker Compose** — Local container orchestration to run MongoDB and Redis instantly.
@@ -47,7 +47,7 @@ The project is designed with a modern, decoupled, and highly scalable stack:
 
 ---
 
-##  Quick Start
+## Quick Start
 
 Follow these steps to initialize the project and get your local development environment running in under 5 minutes:
 
@@ -142,7 +142,7 @@ npm run build
 
 ---
 
-##  Project Structure
+## Project Structure
 
 This monorepo uses **Turborepo** to structure and manage dependencies between apps and packages:
 
@@ -162,7 +162,6 @@ Notion-Clone/
 └── turbo.json            # Turborepo build caching definitions
 ```
 
-##  Contribution Guidelines
+## Contribution Guidelines
 
 We welcome contributions! Please follow these rules to ensure high-quality and consistent code.
-

@@ -4,8 +4,7 @@ import useNote from '@/hooks/useNote'
 const Banner = () => {
     const { note } = useNote();
     const url = note?.banner ? endpoints.notes.banner(note.banner) : "/default-bg.jpg"
-
-    console.log(url);
+    
     return (
         <div>
             <img

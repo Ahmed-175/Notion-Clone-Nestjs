@@ -59,11 +59,22 @@ export const WorkSpaceProvider = ({ children }: { children: React.ReactNode }) =
         return id === activeTabId
     }
     const setLabel = useCallback((id: string, label: string) => {
-        setOpenTabs((prev) =>
-            prev.map((tab) =>
-                tab.id === id ? { ...tab, label } : tab
-            )
-        );
+        console.log(id);
+        setOpenTabs((prev) => {
+            const targetId = `note:${id}`;
+
+            const tab = prev.find((t) => t.id === targetId);
+
+            if (!tab) return prev;
+
+            if (tab.label === label) return prev;
+
+            return prev.map((t) =>
+                t.id === targetId
+                    ? { ...t, label }
+                    : t
+            );
+        });
     }, []);
     return (
         <WorkSpaceContext.Provider
