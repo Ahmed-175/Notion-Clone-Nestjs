@@ -1,11 +1,11 @@
 "use client"
 import useMenu from "@/hooks/useMenu";
-import useNodes from "@/hooks/useNodes";
 import { INode } from "@/types/node.type";
 import { IoFolderOutline } from "react-icons/io5";
 import { LuNewspaper } from "react-icons/lu";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useNodes } from "@/features/nodes/hooks/useNodes";
 
 const NodeHomePage = ({
   node,
@@ -14,7 +14,7 @@ const NodeHomePage = ({
   node: INode;
   onOpenFolder: (node: INode) => void;
 }) => {
-  const { nodes } = useNodes();
+  const { data: nodes } = useNodes();
   const router = useRouter();
   const { showMenu } = useMenu();
 

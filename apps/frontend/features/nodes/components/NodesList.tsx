@@ -15,4 +15,4 @@ const NodesList = () => {
     )
 }
 
-export default NodesList
+export default NodesList;

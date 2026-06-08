@@ -5,12 +5,12 @@ import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 import NodeHomePage from "@/components/homePage/NodeHomePage";
 import useMenu from "@/hooks/useMenu";
-import useNodes from "@/hooks/useNodes";
 import { INode } from "@/types/node.type";
+import { useNodes } from "@/features/nodes/hooks/useNodes";
 
 const home = {
   title: "main folder",
-  _id : null,
+  _id: null,
   type: "folder",
   isFavorite: false,
   isTrash: false,
@@ -19,7 +19,7 @@ const home = {
 };
 
 const Page = () => {
-  const { nodes } = useNodes();
+  const { data: nodes } = useNodes();
   const { showMenu } = useMenu();
 
   const [path, setPath] = useState<INode[]>([]);
@@ -27,9 +27,11 @@ const Page = () => {
   const currentFolder = path.length > 0 ? path[path.length - 1] : home;
 
   const currentNodes = useMemo(() => {
-    return Object.values(nodes).filter((node) => {
-      return node.parentId === currentFolder._id;
-    });
+    if (!nodes) return [];
+
+    return Object.values(nodes).filter(
+      (node) => node.parentId === currentFolder._id
+    );
   }, [nodes, currentFolder]);
 
   const handleOpenFolder = (node: INode) => {

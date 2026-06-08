@@ -1,7 +1,7 @@
 import { nodeService } from "@/services/node.service";
-import useNodes from "@/hooks/useNodes";
 import useToast from "@/hooks/useToast";
 import { INode } from "@/types/node.type";
+import useNodes from "./useNodes";
 
 const useNodeActions = () => {
   const { setNodes } = useNodes();

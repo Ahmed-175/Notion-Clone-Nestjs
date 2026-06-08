@@ -79,18 +79,18 @@ const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
               onClick={() => handleOpenModal("rename")}
             />
 
-            <MenuItem icon={<GoLink />} label="Copy link" onClick={() => {}} />
+            <MenuItem icon={<GoLink />} label="Copy link" onClick={() => { }} />
 
             <MenuItem
               icon={<FaRegTrashAlt />}
               label="Move to bin"
-              onClick={() => {}}
+              onClick={() => { }}
             />
 
             <MenuItem
               icon={<FaRegStar />}
               label="Add to favorites"
-              onClick={() => {}}
+              onClick={() => { }}
             />
           </>
         )}
@@ -103,8 +103,8 @@ const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
           modalType === "create-note"
             ? "New Note Title"
             : modalType === "create-folder"
-            ? "New Folder Title"
-            : "Rename"
+              ? "New Folder Title"
+              : "Rename"
         }
       >
         <div className="flex flex-col gap-4">

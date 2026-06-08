@@ -12,7 +12,6 @@ import { FaNoteSticky } from 'react-icons/fa6';
 import { IoSettingsSharp } from 'react-icons/io5';
 import Link from 'next/link';
 import { routeTab } from '../core/routeTab';
-import useNodes from '@/hooks/useNodes';
 
 export const tabIcons: Record<TabType, React.ComponentType<{ className?: string }>> = {
     home: FiHome,

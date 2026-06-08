@@ -1,5 +1,4 @@
-import useNodes from "@/hooks/useNodes";
-import { Tab, TabParams, TabType } from "../types/tab.type";
+import { Tab, TabType } from "../types/tab.type";
 import { createTab } from "./tabFactory";
 
 type TabBuilder = (segments: string[]) => Tab;
