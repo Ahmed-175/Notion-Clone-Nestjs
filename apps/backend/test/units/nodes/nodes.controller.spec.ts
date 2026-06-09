@@ -62,7 +62,11 @@ describe("NodesController", () => {
 
     const result = await controller.updateNode(dto, id, req);
 
-    expect(service.updatenode).toHaveBeenCalledWith("Updated Title", id, "user-id");
+    expect(service.updatenode).toHaveBeenCalledWith(
+      "Updated Title",
+      id,
+      "user-id",
+    );
     expect(result).toEqual(expectedResult);
   });
 

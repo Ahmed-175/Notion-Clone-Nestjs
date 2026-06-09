@@ -12,11 +12,10 @@ export class NodesService {
     @InjectModel(Node.name) private nodeModel: Model<Node>,
     @InjectModel(Note.name) private noteModel: Model<Note>,
     private readonly buildTree: BuildTree,
-  ) { }
+  ) {}
 
   async create(dto: CreateNodeDto, userId: string) {
     try {
-
       const isTitleExist = await this.nodeModel.findOne({
         parentId: dto.parentId,
         title: dto.title,
@@ -59,7 +58,7 @@ export class NodesService {
         node: newNode,
       };
     } catch (error) {
-      return { errorMessage: error }
+      return { errorMessage: error };
     }
   }
 
@@ -84,20 +83,23 @@ export class NodesService {
       }
       return node;
     } catch (error) {
-      return { errorMessage: error }
+      return { errorMessage: error };
     }
   }
 
   async delete(id: string, userId: string) {
     try {
-      const result = await this.nodeModel.deleteOne({ _id: id, ownerId: userId })
+      const result = await this.nodeModel.deleteOne({
+        _id: id,
+        ownerId: userId,
+      });
 
       if (result.deletedCount === 0) {
         throw new BadRequestException("Node not found or unauthorized");
       }
       return { message: "Node permanently deleted" };
     } catch (error) {
-      return { errorMessage: error }
+      return { errorMessage: error };
     }
   }
 
@@ -106,18 +108,20 @@ export class NodesService {
       const node = await this.nodeModel.findOne({ _id: id, ownerId: userId });
 
       if (!node) {
-        throw new BadRequestException("Node not found or unauthorized")
+        throw new BadRequestException("Node not found or unauthorized");
       }
 
       node.isFavorite = !node.isFavorite;
       await node.save();
 
       return {
-        message: node.isFavorite ? "Added to favorites" : "Removed from favorites",
+        message: node.isFavorite
+          ? "Added to favorites"
+          : "Removed from favorites",
         node,
       };
     } catch (error) {
-      return { errorMessage: error }
+      return { errorMessage: error };
     }
   }
 
@@ -138,7 +142,7 @@ export class NodesService {
 
       return node;
     } catch (error) {
-      return { errorMessage: error }
+      return { errorMessage: error };
     }
   }
 
@@ -158,7 +162,7 @@ export class NodesService {
         map,
       };
     } catch (error) {
-      return { errorMessage: error }
+      return { errorMessage: error };
     }
   }
 }

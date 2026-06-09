@@ -1,14 +1,14 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
-import { redis } from "./providers/redis.provider";
 import { UsersModule } from "./users/users.module";
 import { AuthModule } from "./auth/auth.module";
 import { NodesModule } from "./nodes/nodes.module";
 import { JwtStrategy } from "./auth/strategies/jwt.strategy";
 import { JwtModule } from "@nestjs/jwt";
 import { NotesModule } from "./notes/notes.module";
-import { PresenceModule } from "./presence/presence.module";
+import { RedisModule } from "./redis/redis.module";
+import { PresenceModule } from './presence/presence.module';
 
 @Module({
   imports: [
@@ -27,6 +27,7 @@ import { PresenceModule } from "./presence/presence.module";
     AuthModule,
     NodesModule,
     NotesModule,
+    RedisModule,
     PresenceModule,
   ],
   controllers: [],

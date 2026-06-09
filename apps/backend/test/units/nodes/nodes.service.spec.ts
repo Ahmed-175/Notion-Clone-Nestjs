@@ -148,13 +148,19 @@ describe("NodesService", () => {
   describe("getNoteTree", () => {
     it("should return a built tree", async () => {
       const userId = new mongoose.Types.ObjectId().toString();
-      const nodes = [{ title: "Node 1", type: "folder" }, { title: "Node 2", type: "note" }];
+      const nodes = [
+        { title: "Node 1", type: "folder" },
+        { title: "Node 2", type: "note" },
+      ];
       mockNodeModel.find.mockResolvedValue(nodes);
       mockBuildTree.buildNormalized.mockReturnValue({ root: [] });
 
       const result = await service.getNoteTree(userId);
 
-      expect(mockNodeModel.find).toHaveBeenCalledWith({ ownerId: userId, isTrash: false });
+      expect(mockNodeModel.find).toHaveBeenCalledWith({
+        ownerId: userId,
+        isTrash: false,
+      });
       expect(mockBuildTree.buildNormalized).toHaveBeenCalled();
       expect(result).toEqual({ map: { root: [] } });
     });

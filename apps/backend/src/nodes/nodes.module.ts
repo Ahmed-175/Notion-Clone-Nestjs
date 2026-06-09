@@ -1,4 +1,4 @@
-import {  Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { NodesService } from "./nodes.service";
 import { NodesController } from "./nodes.controller";
 import { MongooseModule } from "@nestjs/mongoose";

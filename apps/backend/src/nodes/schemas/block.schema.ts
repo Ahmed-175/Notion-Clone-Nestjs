@@ -34,7 +34,6 @@ export class Block {
     enum: BlockType,
     default: BlockType.P,
   })
-  
   type: BlockType;
   @Prop()
   content?: string;
