@@ -1,40 +1,61 @@
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const rootDir = path.join(__dirname, '..');
-const backendEnvExample = path.join(rootDir, 'apps', 'backend', '.env.example');
-const backendEnv = path.join(rootDir, 'apps', 'backend', '.env');
-const frontendEnvExample = path.join(rootDir, 'apps', 'frontend', '.env.example');
-const frontendEnv = path.join(rootDir, 'apps', 'frontend', '.env.local');
+const envConfigs = [
+  {
+    example: path.join(rootDir, '.env.example'),
+    target: path.join(rootDir, '.env'),
+    label: 'Root .env'
+  },
+  {
+    example: path.join(rootDir, 'apps', 'backend', '.env.example'),
+    target: path.join(rootDir, 'apps', 'backend', '.env'),
+    label: 'Backend .env'
+  },
+  {
+    example: path.join(rootDir, 'apps', 'frontend', '.env.example'),
+    target: path.join(rootDir, 'apps', 'frontend', '.env.local'),
+    label: 'Frontend .env.local'
+  }
+];
 
-console.log('Starting Notion Clone workspace setup...');
+console.log('\x1b[36m%s\x1b[0m', '🚀 Starting Notion Clone Workspace Setup...');
 
 try {
-  // Check if backend environment file exists
-  if (!fs.existsSync(backendEnv)) {
-    console.log(`Copying apps/backend/.env.example to apps/backend/.env...`);
-    fs.copyFileSync(backendEnvExample, backendEnv);
-    console.log('✓ apps/backend/.env successfully created!');
-  } else {
-    console.log('✓ apps/backend/.env already exists. Skipping copy.');
+  // 1. Copy Environment Files
+  console.log('\n\x1b[33m%s\x1b[0m', '📝 Setting up environment files...');
+  envConfigs.forEach(config => {
+    if (fs.existsSync(config.example)) {
+      if (!fs.existsSync(config.target)) {
+        fs.copyFileSync(config.example, config.target);
+        console.log(`  ✅ Created ${config.label}`);
+      } else {
+        console.log(`  ℹ️  ${config.label} already exists, skipping.`);
+      }
+    } else {
+      console.log(`  ⚠️  Example file not found for ${config.label}: ${config.example}`);
+    }
+  });
+
+  // 2. Install Dependencies
+  console.log('\n\x1b[33m%s\x1b[0m', '📦 Installing dependencies...');
+  try {
+    execSync('npm install', { stdio: 'inherit', cwd: rootDir });
+    console.log('  ✅ Dependencies installed successfully.');
+  } catch (err) {
+    console.log('  ⚠️  Failed to install dependencies automatically. Please run "npm install" manually.');
   }
 
-  // Check if frontend environment file exists
-  if (!fs.existsSync(frontendEnv)) {
-    console.log(`Copying apps/frontend/.env.example to apps/frontend/.env.local...`);
-    fs.copyFileSync(frontendEnvExample, frontendEnv);
-    console.log('✓ apps/frontend/.env.local successfully created!');
-  } else {
-    console.log('✓ apps/frontend/.env.local already exists. Skipping copy.');
-  }
+  console.log('\n\x1b[32m%s\x1b[0m', '🎉 Setup complete!');
+  console.log('\n\x1b[1m%s\x1b[0m', 'Next steps:');
+  console.log('  1. Edit environment variables in \x1b[34mapps/backend/.env\x1b[0m');
+  console.log('  2. Start databases: \x1b[34mdocker compose up -d\x1b[0m');
+  console.log('  3. Start the project: \x1b[34mnpm run dev\x1b[0m');
+  console.log('\nHappy coding! 🚀');
 
-  console.log('\nWorkspace setup is complete!');
-  console.log('Next steps:');
-  console.log('1. Start the infrastructure services (MongoDB & Redis):');
-  console.log('   docker compose up -d');
-  console.log('2. Start the development backend & frontend applications:');
-  console.log('   npm run dev');
 } catch (error) {
-  console.error('Failed to setup workspace:', error.message);
+  console.error('\n\x1b[31m%s\x1b[0m', '❌ Failed to setup workspace:', error.message);
   process.exit(1);
 }

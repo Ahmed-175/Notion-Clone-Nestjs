@@ -49,90 +49,49 @@ The project is designed with a modern, decoupled, and highly scalable stack:
 
 ## Quick Start
 
-Follow these steps to initialize the project and get your local development environment running in under 5 minutes:
+Get your local development environment running in under 2 minutes using our automated setup script:
 
 ### Prerequisites
 
-- **Node.js** (version 18 or higher)
-- **npm** (version 10 or higher)
-- **Docker Desktop** (for running MongoDB and Redis)
+- **Node.js** (v18+) & **npm** (v10+)
+- **Docker Desktop** (for MongoDB & Redis)
 
 ---
 
-### Step 1: Clone the Repository
+### One-Step Setup
 
 ```bash
 git clone https://github.com/Ahmed-175/Notion-Clone-Nestjs.git
 cd Notion-Clone-Nestjs
-```
-
-### Step 2: Initialize Configuration
-
-We provide an interactive workspace setup script. Execute it to copy sample configurations and prepare local environments:
-
-```bash
 npm run setup
 ```
 
-This script automatically copies `apps/backend/.env.example` into `apps/backend/.env` and `apps/frontend/.env.example` into `apps/frontend/.env.local`.
+The setup script will:
+1.  Initialize all environment files (`.env`, `.env.local`).
+2.  Install all project dependencies across the monorepo.
 
-### Step 3: Configure Environment Variables
+---
 
-#### Backend Configuration
+### Launch the Application
 
-Open `apps/backend/.env` and set the required variables:
+1.  **Start Databases**:
+    ```bash
+    docker compose up -d
+    ```
+2.  **Configure Environment** (Optional):
+    Edit `apps/backend/.env` if you need to set your `GOOGLE_CLIENT_ID` or custom secrets.
+3.  **Run Development Servers**:
+    ```bash
+    npm run dev
+    ```
 
-```ini
-MONGO_URL=mongodb://localhost:27017/notion-clone
-JWT_SECRET=your-secure-jwt-signing-key
+- **Frontend**: [http://localhost:3000](http://localhost:3000)
+- **Backend API**: [http://localhost:8000](http://localhost:8000)
+- **API Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-# Get these from Google Cloud Console (APIs & Services > Credentials)
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-```
+---
 
-#### Frontend Configuration
-
-Open `apps/frontend/.env.local` and ensure the backend URL is correct:
-
-```ini
-NEXT_PUBLIC_BACKEND_URL=http://localhost:8000/api
-```
-
-### Step 4: Start Infrastructure Containers
-
-Launch MongoDB and Redis databases using Docker Compose:
-
-```bash
-docker compose up -d
-```
-
-Verify that the databases are running locally on their default ports:
-
-- **MongoDB**: `27017`
-- **Redis**: `6379`
-
-### Step 5: Install Dependencies
-
-Install all package dependencies for the monorepo from the root directory:
-
-```bash
-npm install
-```
-
-### Step 6: Run in Development Mode
-
-Start both backend and frontend development servers concurrently:
-
-```bash
-npm run dev
-```
-
-- **Next.js Frontend**: [http://localhost:3000](http://localhost:3000)
-- **NestJS Backend API**: [http://localhost:8000](http://localhost:8000)
-- **Swagger API Docs Explorer**: [http://localhost:8000/docs](http://localhost:8000/docs)
-
-### Step 7: Build for Production
+### Production Build
 
 To build static bundles and transpile NestJS code:
 
