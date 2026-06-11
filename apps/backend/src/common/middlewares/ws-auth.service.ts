@@ -9,8 +9,6 @@ export class WsAuthService {
   constructor(private readonly jwtService: JwtService) {}
 
   authenticate(socket: AuthenticatedSocket): void {
-    const note = socket.handshake.auth.noteId;
-    console.log(note);
     const cookies = cookie.parse(socket.handshake.headers.cookie || "");
     const token = cookies.access_token;
 
@@ -18,7 +16,9 @@ export class WsAuthService {
       throw new Error("No token");
     }
 
-    const payload = this.jwtService.verify<JwtPayload>(token);
+    const payload = this.jwtService.verify<JwtPayload>(token, {
+      secret: process.env.JWT_SECRET,
+    });
 
     socket.data.user = payload;
   }

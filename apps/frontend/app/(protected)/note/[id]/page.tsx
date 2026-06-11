@@ -10,8 +10,6 @@ import { useEffect } from "react";
 const page = () => {
     const { note } = useNote();
     const { setLabel, activeTabId } = useTab();
-
-    console.log(activeTabId);
     useEffect(() => {
         if (note && activeTabId) {
             setLabel(activeTabId, note.title);
