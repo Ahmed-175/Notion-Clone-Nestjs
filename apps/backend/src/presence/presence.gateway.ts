@@ -1,18 +1,18 @@
 import {
   ConnectedSocket,
   MessageBody,
-  // OnGatewayConnection,
-  // OnGatewayDisconnect,
+  OnGatewayDisconnect,
   OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WsException,
 } from "@nestjs/websockets";
-import { PresenceService } from "./presence.service";
 import { Server } from "socket.io";
 import type { AuthenticatedSocket } from "src/common/types/AuthenticatedSocket.type";
-import { ActiveUser } from "./dto/ActiveUser.dto";
+import { PresenceService } from "./presence.service";
 import { WsAuthService } from "src/common/middlewares/ws-auth.service";
+import { ActiveUser } from "./dto/ActiveUser.dto";
+
 @WebSocketGateway({
   namespace: "/note",
   cors: {
@@ -20,53 +20,75 @@ import { WsAuthService } from "src/common/middlewares/ws-auth.service";
     credentials: true,
   },
 })
-export class PresenceGateway implements OnGatewayInit {
+export class PresenceGateway implements OnGatewayInit, OnGatewayDisconnect {
   constructor(
     private readonly presenceService: PresenceService,
     private readonly wsAuthService: WsAuthService,
   ) {}
+
+  async handleDisconnect(client: AuthenticatedSocket) {
+    const noteId = client.data.currentNote;
+    client.leave(`note:${noteId}`);
+
+    await this.presenceService.removeActiveUser(client.data.user._id, noteId);
+
+    client
+      .to(`note:${noteId}`)
+      .emit("remove-active-user", client.data.user._id);
+  }
+
   afterInit(server: Server) {
     server.use((socket, next) => {
       try {
         this.wsAuthService.authenticate(socket as AuthenticatedSocket);
         next();
-      } catch (error) {
-        console.error(error);
+      } catch (err) {
         next(new Error("Unauthorized"));
       }
     });
   }
 
   @SubscribeMessage("join-note")
-  async handelJoinNote(
+  async handleJoinNote(
     @ConnectedSocket() client: AuthenticatedSocket,
-    @MessageBody() body: { note_id: string },
+    @MessageBody() noteId: string,
   ) {
     const userId = client.data.user._id;
-    if (!userId || !body.note_id) {
+
+    if (!userId || !noteId) {
       throw new WsException("Missing data");
     }
-    await client.join(`note:${body.note_id}`);
-    const me = await this.presenceService.addActiveUser(userId, body.note_id);
-    const users: ActiveUser[] = await this.presenceService.getSetMembers(
-      body.note_id,
-    );
+
+    client.join(`note:${noteId}`);
+    client.data.currentNote = noteId;
+
+    const me = await this.presenceService.addActiveUser(userId, noteId);
+
+    const users: ActiveUser[] =
+      await this.presenceService.getSetMembers(noteId);
+
+    // send full list only to joining user
     client.emit("all-online-users", users);
-    client.to(`note:${body.note_id}`).emit("add-active-user", me);
+
+    // notify others
+    client.to(`note:${noteId}`).emit("add-active-user", me);
   }
+
   @SubscribeMessage("leave-note")
   async handleLeaveNote(
     @ConnectedSocket() client: AuthenticatedSocket,
-    @MessageBody() body: { note_id: string | null },
+    @MessageBody() noteId: string,
   ) {
-    if (!body.note_id) {
-      throw new WsException("note id does not provide");
+    if (!noteId) {
+      throw new WsException("note id not provided");
     }
-    await client.leave(`note:${body.note_id}`);
-    await this.presenceService.removeActiveUser(
-      client.data.user._id,
-      body.note_id,
-    );
-    client.to(`note:${body.note_id}`).emit("user-leave", client.data.user._id);
+
+    client.leave(`note:${noteId}`);
+
+    await this.presenceService.removeActiveUser(client.data.user._id, noteId);
+
+    client
+      .to(`note:${noteId}`)
+      .emit("remove-active-user", client.data.user._id);
   }
 }

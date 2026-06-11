@@ -3,6 +3,7 @@ import Tags from "./Tags";
 import { HiOutlineCalendarDateRange } from "react-icons/hi2";
 import { GoHash } from "react-icons/go";
 import { GrResources } from "react-icons/gr";
+import ActiveUsers from "@/features/presence/components/ActiveUsers";
 
 const Properties = () => {
     const { note } = useNote();
@@ -36,6 +37,9 @@ const Properties = () => {
                         resources</div>
 
                     <Tags tags={note?.tags} />
+                </div>
+                <div className=" w-full flex  items-center">
+                    <ActiveUsers />
                 </div>
             </div>
         </div>

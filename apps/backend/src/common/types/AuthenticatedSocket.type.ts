@@ -10,5 +10,6 @@ export interface AuthenticatedSocket extends Socket {
   };
   data: {
     user: JwtPayload;
+    currentNote: string;
   };
 }

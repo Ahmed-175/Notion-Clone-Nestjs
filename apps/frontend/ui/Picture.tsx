@@ -54,8 +54,23 @@ const Picture = ({
     return (
       <div
         className=" bg-black w-10 text-white text-2xl flex
-       justify-center items-center h-10 rounded-full "
+       justify-center items-center relative h-10 rounded-full "
       >
+        <input
+          onChange={handleUploadPicture}
+          type="file"
+          name="upload_picture"
+          className=" hidden"
+          id="upload_picture"
+        />
+        <label
+          htmlFor="upload_picture"
+          className="flex justify-center items-center absolute 
+       w-full h-full left-0 top-0 opacity-0
+       hover:bg-black hover:opacity-60 cursor-pointer duration-150 rounded-full text-white text-2xl "
+        >
+          <MdOutlineFileUpload />
+        </label>
         <div className=" font-bold">{username.charAt(0)}</div>
       </div>
     );

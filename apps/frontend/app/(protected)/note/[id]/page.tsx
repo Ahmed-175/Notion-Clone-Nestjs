@@ -3,6 +3,8 @@ import Banner from "@/components/Note/Banner";
 import Properties from "@/components/Note/Properties";
 import TitleNote from "@/components/Note/TitleNote";
 import Preview from "@/components/Preview/Preview";
+import ActiveUsers from "@/features/presence/components/ActiveUsers";
+import PresenceProvider from "@/features/presence/context/presence.context";
 import useTab from "@/features/workspace/hooks/useTab";
 import useNote from "@/hooks/useNote";
 import { useEffect } from "react";
@@ -16,11 +18,14 @@ const page = () => {
         }
     }, [note?._id, note?.title, setLabel]);
     return (
-        <div>
-            <Banner />
-            <TitleNote />
-            <Properties />
-            <Preview />
+        <div className=" relative">
+            <PresenceProvider>
+                <Banner />
+                <TitleNote />
+                <Properties />
+                <Preview />
+                {/* <ActiveUsers /> */}
+            </PresenceProvider>
         </div>
     )
 }
