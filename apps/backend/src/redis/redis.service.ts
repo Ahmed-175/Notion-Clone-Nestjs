@@ -9,8 +9,9 @@ export class RedisService {
   async set(key: string, value: string, ttlSeconds?: number) {
     if (ttlSeconds) {
       await this.redis.set(key, value, "EX", ttlSeconds);
+    } else {
+      await this.redis.set(key, value);
     }
-    await this.redis.set(key, value);
   }
 
   async get(key: string): Promise<string | null> {

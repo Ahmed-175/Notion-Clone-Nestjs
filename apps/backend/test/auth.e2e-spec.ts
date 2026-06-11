@@ -3,12 +3,14 @@ import { getConnectionToken } from "@nestjs/mongoose";
 import { Test } from "@nestjs/testing";
 import cookieParser from "cookie-parser";
 import { AppModule } from "src/app.module";
-import { redis } from "src/providers/redis.provider";
+import { REDIS_CLIENT } from "src/redis/redis.constants";
 import request from "supertest";
+import Redis from "ioredis";
 
 describe("Auth Module E2E Testing", () => {
   let app: INestApplication;
   let agent;
+  let redis: Redis;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -20,6 +22,8 @@ describe("Auth Module E2E Testing", () => {
     app.use(cookieParser());
 
     await app.init();
+
+    redis = app.get<Redis>(REDIS_CLIENT);
 
     const connection = app.get(getConnectionToken());
     await connection.collection("users").deleteMany({
