@@ -8,7 +8,7 @@ import { JwtStrategy } from "./auth/strategies/jwt.strategy";
 import { JwtModule } from "@nestjs/jwt";
 import { NotesModule } from "./notes/notes.module";
 import { RedisModule } from "./redis/redis.module";
-import { PresenceModule } from './presence/presence.module';
+import { PresenceModule } from "./presence/presence.module";
 
 @Module({
   imports: [

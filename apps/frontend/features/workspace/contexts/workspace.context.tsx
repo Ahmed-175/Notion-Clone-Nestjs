@@ -59,18 +59,19 @@ export const WorkSpaceProvider = ({ children }: { children: React.ReactNode }) =
         return id === activeTabId
     }
     const setLabel = useCallback((id: string, label: string) => {
-        console.log(id);
         setOpenTabs((prev) => {
-            const targetId = `note:${id}`;
-
-            const tab = prev.find((t) => t.id === targetId);
+            // const targetId = `note:${id}`;
+            const tab = prev.find((t) => {
+                return t.id === id;
+            });
+            console.log("this tab inside the prev", tab);
 
             if (!tab) return prev;
 
             if (tab.label === label) return prev;
 
             return prev.map((t) =>
-                t.id === targetId
+                t.id === id
                     ? { ...t, label }
                     : t
             );

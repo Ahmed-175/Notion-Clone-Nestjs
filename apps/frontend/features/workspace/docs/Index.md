@@ -56,7 +56,6 @@ Now you can use this by simply changing the URL. For example, navigating from `/
 <Link href="/home">Home Page</Link>
 ```
 
-
 To use this tab system, you navigate to another page with the required information, such as `:id`, depending on the page.
 
 We also define specific pages, and each page type has its own parameters. All available pages are defined in `/workspace/types/tab.type.ts`.
@@ -111,14 +110,15 @@ This array is typically used to render the list of tabs in the UI, such as in th
 ```ts
 const { activeTabId } = useTab();
 
-if (activeTabId === 'home') {
-    // Perform actions specific to the home tab
+if (activeTabId === "home") {
+  // Perform actions specific to the home tab
 }
 ```
 
 ## `removeTab`
 
 The `removeTab` function is used to close a tab by its ID. When a tab is removed:
+
 1. It is filtered out of the `openTabs` list.
 2. If the tab being removed was the active tab, the workspace automatically navigates to the next available tab.
 3. If no tabs remain, it redirects the user to the `/home` page.
@@ -127,7 +127,7 @@ The `removeTab` function is used to close a tab by its ID. When a tab is removed
 const { removeTab } = useTab();
 
 const handleClose = (id: string) => {
-    removeTab(id);
+  removeTab(id);
 };
 ```
 
@@ -139,7 +139,7 @@ const handleClose = (id: string) => {
 const { setActiveTab } = useTab();
 
 const handleSwitch = (id: string) => {
-    setActiveTab(id);
+  setActiveTab(id);
 };
 ```
 
@@ -150,7 +150,7 @@ const handleSwitch = (id: string) => {
 ```ts
 const { isActiveTab } = useTab();
 
-const className = isActiveTab(tab.id) ? 'bg-active' : 'bg-inactive';
+const className = isActiveTab(tab.id) ? "bg-active" : "bg-inactive";
 ```
 
 ## `setLabel`
@@ -162,10 +162,24 @@ const { setLabel } = useTab();
 
 // Example: Update tab label when note title is fetched
 useEffect(() => {
-    if (noteData?.title) {
-        setLabel(`note:${noteId}`, noteData.title);
-    }
+  if (noteData?.title) {
+    setLabel(`note:${noteId}`, noteData.title);
+  }
 }, [noteData?.title]);
+```
+
+or you can use the `activeTabId` in you node like
+
+```ts
+const { note } = useNote();
+const { setLabel, activeTabId } = useTab();
+
+console.log(activeTabId);
+useEffect(() => {
+  if (note && activeTabId) {
+    setLabel(activeTabId, note.title);
+  }
+}, [note?._id, note?.title, setLabel]);
 ```
 
 ## `<WorkspaceHeader>`
@@ -176,12 +190,11 @@ useEffect(() => {
 import WorkspaceHeader from "@/features/workspace/components/WorkSpaceHeader";
 
 const ProtectedLayout = ({ children }) => {
-    return (
-        <WorkSpaceProvider>
-            <WorkspaceHeader />
-            {children}
-        </WorkSpaceProvider>
-    );
+  return (
+    <WorkSpaceProvider>
+      <WorkspaceHeader />
+      {children}
+    </WorkSpaceProvider>
+  );
 };
 ```
-

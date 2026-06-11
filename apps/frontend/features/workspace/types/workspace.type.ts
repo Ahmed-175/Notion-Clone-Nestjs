@@ -51,5 +51,5 @@ export interface IWorkSpaceContext {
 
   isActiveTab: (id: string) => boolean;
 
-  setLabel: (id: string  , label : string) => void;
+  setLabel: (id: string, label: string) => void;
 }
