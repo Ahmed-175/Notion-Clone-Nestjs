@@ -36,4 +36,11 @@ export class PresenceService {
       .lean<ActiveUser[]>();
     return users;
   }
+
+  async removeActiveUser(userId: string, noteId: string): Promise<number> {
+    return await this.redisService.removeFromSet(
+      `note:${noteId}:online-users`,
+      userId,
+    );
+  }
 }
