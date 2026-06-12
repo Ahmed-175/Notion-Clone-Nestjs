@@ -13,10 +13,11 @@ const EditorContext = createContext<IEditorContext | null>(null);
 
 const EditorProvider = ({ children }: { children: React.ReactNode }) => {
     const [content, setContent] = useState("");
-
+    const handleChangeContent = async (c: string) => {
+    }
     return (
-        <EditorContext.Provider value={{}}>
-
+        <EditorContext.Provider value={{ handleChangeContent, content }}>
+            {children}
         </EditorContext.Provider>
     )
 

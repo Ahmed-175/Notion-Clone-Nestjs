@@ -78,7 +78,10 @@ export const WorkSpaceProvider = ({ children }: { children: React.ReactNode }) =
     }, []);
 
     useEffect(() => {
-        setActiveNoteId(activeTabId.split(":")[1])
+        if (activeNoteId) {
+
+            setActiveNoteId(activeTabId.split(":")[1])
+        }
     }, [activeTabId])
 
     return (
