@@ -10,4 +10,5 @@ export interface IEditorContext {
    * reflected in real time for all connected collaborators.
    */
   content: string;
+
 }

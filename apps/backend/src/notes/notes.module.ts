@@ -12,5 +12,6 @@ import { Node, nodeSchema } from "src/nodes/schemas/node.schema";
   ],
   controllers: [NotesController],
   providers: [NotesService],
+  exports: [NotesService],
 })
 export class NotesModule {}

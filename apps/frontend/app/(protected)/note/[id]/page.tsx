@@ -3,7 +3,8 @@ import Banner from "@/components/Note/Banner";
 import Properties from "@/components/Note/Properties";
 import TitleNote from "@/components/Note/TitleNote";
 import Preview from "@/components/Preview/Preview";
-import ActiveUsers from "@/features/presence/components/ActiveUsers";
+import Editor from "@/features/editor/components/Editor";
+import EditorProvider from "@/features/editor/context/Editor.context";
 import PresenceProvider from "@/features/presence/context/presence.context";
 import useTab from "@/features/workspace/hooks/useTab";
 import useNote from "@/hooks/useNote";
@@ -19,13 +20,17 @@ const page = () => {
     }, [note?._id, note?.title, setLabel]);
     return (
         <div className=" relative">
-            <PresenceProvider>
-                <Banner />
-                <TitleNote />
-                <Properties />
-                <Preview />
-                {/* <ActiveUsers /> */}
-            </PresenceProvider>
+            <EditorProvider>
+                <PresenceProvider>
+                    <Banner />
+                    <TitleNote />
+                    <Properties />
+
+                    {/* <Preview /> */}
+                    <Editor/>
+
+                </PresenceProvider>
+            </EditorProvider>
         </div>
     )
 }
