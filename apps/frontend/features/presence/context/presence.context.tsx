@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
-import { socket } from "../presence.socket";
 import { IActiveUser, IPresenceContext } from "../types/presence.type";
 import useTab from "@/features/workspace/hooks/useTab";
+import { socket } from "@/shared/socket/note.socket";
 
 export const PresenceContext = createContext<IPresenceContext | null>(null);
 
