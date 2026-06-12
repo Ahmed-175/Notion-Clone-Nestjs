@@ -52,4 +52,9 @@ export interface IWorkSpaceContext {
   isActiveTab: (id: string) => boolean;
 
   setLabel: (id: string, label: string) => void;
+  /**
+   * Returns the ID of the currently active note,
+   * eliminating the need to manually extract it from `activeTabId[1]`.
+   */
+  activeNoteId: string | null;
 }

@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Tab } from "../types/tab.type";
 import { useWorkspaceSync } from "../hooks/useWorkspaceSync";
@@ -12,6 +12,7 @@ export const WorkSpaceProvider = ({ children }: { children: React.ReactNode }) =
     const router = useRouter();
     const [openTabs, setOpenTabs] = useState<Tab[]>([]);
     const [activeTabId, setActiveTabId] = useState<string | null>(null);
+    const [activeNoteId, setActiveNoteId] = useState<string | null>(null);
 
     useWorkspaceSync((type, segments) => {
         let tab: Tab | null = tabRegistry[type]?.(segments);
@@ -75,15 +76,22 @@ export const WorkSpaceProvider = ({ children }: { children: React.ReactNode }) =
             );
         });
     }, []);
+
+    useEffect(() => {
+        setActiveNoteId(activeTabId.split(":")[1])
+    }, [activeTabId])
+
     return (
         <WorkSpaceContext.Provider
             value={{
                 openTabs,
                 activeTabId,
+                activeNoteId,
                 setActiveTab,
                 removeTab,
                 isActiveTab,
-                setLabel
+                setLabel,
+
             }}
         >
             {children}
