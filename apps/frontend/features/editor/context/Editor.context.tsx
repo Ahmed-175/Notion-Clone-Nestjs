@@ -23,7 +23,7 @@ const EditorProvider = ({ children }: { children: React.ReactNode }) => {
                 node_id: activeTabId.split(":")[1],
                 content: changes,
             });
-        }, 2000);
+        }, 1000);
     };
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 @import "tailwindcss";
-@import "../styles/preview.css";
+@import "../features/preview/styles/preview.css";
 * {
   font-family: "Itim", sans-serif;
 }

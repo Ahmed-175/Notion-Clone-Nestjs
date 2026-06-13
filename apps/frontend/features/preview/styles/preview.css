@@ -1,0 +1,25 @@
+.preview h1 {
+  @apply text-4xl font-bold;
+}
+
+.preview h2 {
+  @apply text-3xl font-bold;
+}
+
+.preview h3 {
+  @apply text-2xl font-bold;
+}
+
+.preview h4 {
+  @apply text-xl font-bold;
+}
+
+.preview hr {
+  @apply text-slate-500;
+}
+.preview br {
+  @apply my-1;
+}
+.preview blockquote {
+  @apply pl-4  border-0  border-l-2 border-blue-700;
+}

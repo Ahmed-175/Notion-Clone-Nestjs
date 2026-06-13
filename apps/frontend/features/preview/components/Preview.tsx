@@ -1,13 +1,18 @@
 import useNote from '@/hooks/useNote';
 import { parserMD } from '@/markdown/parser';
+import { socket } from '@/shared/socket/note.socket';
 import { useEffect, useRef, useState } from 'react';
 
 const Preview = () => {
     const { note } = useNote();
-    const [content, setContent] = useState("");
     const divRef = useRef<HTMLDivElement>(null);
-
     useEffect(() => {
+        socket.on("user-update-content", (data) => {
+            const value = parserMD(data);
+            if (divRef.current) {
+                divRef.current.innerHTML = value
+            }
+        })
         const value = parserMD(note?.content || "")
 
         if (divRef.current) {
@@ -18,11 +23,7 @@ const Preview = () => {
     return (
         <div
             ref={divRef}
-            contentEditable
-            suppressContentEditableWarning
-            onInput={(e) => {
-                setContent(e.currentTarget.innerHTML);
-            }}
+
             className="preview px-[10%] text-xl mt-4 outline-none mb-12"
         />
     );
