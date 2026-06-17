@@ -22,4 +22,12 @@ export const nodeService = {
     const res : any = await axiosInstance.get(endpoints.nodes.get);
     return res.data;
   },
+  getTrash: async () => {
+    const res: any = await axiosInstance.get(endpoints.nodes.trash);
+    return res.data;
+  },
+  getFavorites: async () => {
+    const res: any = await axiosInstance.get(endpoints.nodes.favorites);
+    return res.data;
+  },
 };

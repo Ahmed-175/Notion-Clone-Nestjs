@@ -7,6 +7,8 @@ const Recursion = ({ node }: { node: INode }) => {
   const { data: nodes } = useNodes();
   const [isOpen, setIsOpen] = useState(false);
 
+  if (!nodes) return null;
+
   const children = Object.values(nodes).filter((n) => n.parentId === node._id);
 
   return (

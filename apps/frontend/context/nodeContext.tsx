@@ -14,6 +14,8 @@ interface INodeContext {
   setNodes: React.Dispatch<SetStateAction<Record<string, INode>>>;
   loading: boolean;
   setLoading: React.Dispatch<SetStateAction<boolean>>;
+  getTrash: () => Promise<INode[]>;
+  getFavorites: () => Promise<INode[]>;
 }
 
 export const NodeContext = createContext<INodeContext | null>(null);
@@ -22,6 +24,26 @@ const NodeProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(false);
 
   const { showMgs } = useToast();
+
+  const getTrash = async () => {
+    try {
+      const data = await nodeService.getTrash();
+      return data;
+    } catch (error) {
+      showMgs({ type: "error", message: "Failed to load trash" });
+      return [];
+    }
+  };
+
+  const getFavorites = async () => {
+    try {
+      const data = await nodeService.getFavorites();
+      return data;
+    } catch (error) {
+      showMgs({ type: "error", message: "Failed to load favorites" });
+      return [];
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +66,9 @@ const NodeProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <NodeContext.Provider value={{ nodes, setNodes, loading, setLoading }}>
+    <NodeContext.Provider
+      value={{ nodes, setNodes, loading, setLoading, getTrash, getFavorites }}
+    >
       {children}
     </NodeContext.Provider>
   );

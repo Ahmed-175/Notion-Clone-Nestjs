@@ -4,14 +4,14 @@ import { FaRegFolder, FaRegStar, FaRegTrashAlt } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { GoLink } from "react-icons/go";
 import MenuItem from "./MenuItem";
-import useNodeActions from "@/hooks/useNodeActions";
+import { useNodeMutations } from "@/features/nodes/hooks/useNodeMutations";
 import { useState } from "react";
 import Modal from "@/shared/components/Modal";
 import useMenu from "../hooks/useMenu";
 
 const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
-  const { addNode, renameNode } = useNodeActions();
-  const { toggleFavorite, softDelete } = useMenu();
+  const { createNode, renameNode, deleteNode, toggleFavorite } = useNodeMutations();
+  const { toggleFavorite: toggleFavoriteOld, softDelete: softDeleteOld } = useMenu();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"create-note" | "create-folder" | "rename">("rename");
   const [nodeTitle, setNodeTitle] = useState("");
@@ -30,11 +30,11 @@ const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
     if (!nodeTitle.trim()) return;
 
     if (modalType === "create-note") {
-      addNode(nodeTitle, "note", node._id ? node._id : null);
+      createNode.mutate({ title: nodeTitle, type: "note", parentId: node._id ? node._id : null });
     } else if (modalType === "create-folder") {
-      addNode(nodeTitle, "folder", node._id ? node._id : null);
+      createNode.mutate({ title: nodeTitle, type: "folder", parentId: node._id ? node._id : null });
     } else if (modalType === "rename" && node._id) {
-      renameNode(node._id, nodeTitle);
+      renameNode.mutate({ id: node._id, title: nodeTitle });
     }
     setIsModalOpen(false);
   };
@@ -88,13 +88,13 @@ const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
             <MenuItem
               icon={<FaRegTrashAlt />}
               label="Move to bin"
-              onClick={() => softDelete()}
+              onClick={() => deleteNode.mutate(node._id)}
             />
 
             <MenuItem
               icon={<FaRegStar />}
               label={node.isFavorite ? "Remove from favorites" : "Add to favorites"}
-              onClick={() => toggleFavorite(node._id)}
+              onClick={() => toggleFavorite.mutate(node._id)}
             />
           </>
         )}

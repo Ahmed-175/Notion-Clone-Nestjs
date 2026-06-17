@@ -7,14 +7,14 @@ import {
 } from "react";
 import Menu from "../components/Menu";
 import { IMenuContext } from "../types/menu.type";
-import useNodeActions from "@/hooks/useNodeActions";
+import { useNodeMutations } from "@/features/nodes/hooks/useNodeMutations";
 
 
 export const menuContext = createContext<IMenuContext | null>(null);
 
 const MenuProvider = ({ children }: { children: React.ReactNode }) => {
   const [openMenu, setOpenMenu] = useState(false);
-  const { toggleFavoriteNode, deleteNode } = useNodeActions();
+  const { toggleFavorite: toggleFavoriteMutation, deleteNode: deleteNodeMutation } = useNodeMutations();
   const home: any = {
     title: "main folder",
     _id: null,
@@ -49,13 +49,13 @@ const MenuProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const toggleFavorite = async (nodeId: string) => {
-    await toggleFavoriteNode(nodeId);
+    toggleFavoriteMutation.mutate(nodeId);
     setOpenMenu(false);
   }
 
   const softDelete = async () => {
     if (node._id) {
-      await deleteNode(node._id);
+      deleteNodeMutation.mutate(node._id);
       setOpenMenu(false);
     }
   }

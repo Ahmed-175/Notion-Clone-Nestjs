@@ -165,4 +165,29 @@ export class NodesService {
       return { errorMessage: error };
     }
   }
+
+  async getTrashNodes(userId: string) {
+    try {
+      const nodes = await this.nodeModel.find({
+        ownerId: userId,
+        isTrash: true,
+      });
+      return nodes;
+    } catch (error) {
+      return { errorMessage: error };
+    }
+  }
+
+  async getFavoriteNodes(userId: string) {
+    try {
+      const nodes = await this.nodeModel.find({
+        ownerId: userId,
+        isFavorite: true,
+        isTrash: false,
+      });
+      return nodes;
+    } catch (error) {
+      return { errorMessage: error };
+    }
+  }
 }

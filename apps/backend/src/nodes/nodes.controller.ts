@@ -44,6 +44,16 @@ export class NodesController {
     return await this.nodesService.getNoteTree(req.user._id);
   }
 
+  @Get("trash")
+  async getTrashNodes(@Request() req) {
+    return await this.nodesService.getTrashNodes(req.user._id);
+  }
+
+  @Get("favorites")
+  async getFavoriteNodes(@Request() req) {
+    return await this.nodesService.getFavoriteNodes(req.user._id);
+  }
+
   @Patch(":id/favorite")
   async toggleFavorite(@Param("id") id: string, @Request() req) {
     return await this.nodesService.handlefavorite(id, req.user._id);

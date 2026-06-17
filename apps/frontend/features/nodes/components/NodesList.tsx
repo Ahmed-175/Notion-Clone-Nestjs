@@ -3,6 +3,9 @@ import Recursion from './Recursion';
 
 const NodesList = () => {
     const { data: nodes } = useNodes();
+    
+    if (!nodes) return null;
+
     return (
         <>
             {Object.values(nodes).map(

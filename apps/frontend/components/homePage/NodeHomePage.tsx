@@ -18,6 +18,8 @@ const NodeHomePage = ({
   const router = useRouter();
   const { showMenu } = useMenu();
 
+  if (!nodes) return null;
+
   const handleClick = (node: INode) => {
     if (node.type === "note") {
       router.push(`/note/${node._id}`)
