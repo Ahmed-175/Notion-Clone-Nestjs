@@ -26,15 +26,11 @@ export class WsJwtGuard implements CanActivate {
     const cookies = cookie.parse(rawCookies);
     const token = cookies.access_token;
 
-    console.log(token);
-
     if (!token) {
       throw new UnauthorizedException("No access token provided");
     }
     try {
       const payload = this.jwtService.verify<JwtPayload>(token);
-      console.log("payload : ", payload);
-
       client.data.user = payload;
 
       return true;

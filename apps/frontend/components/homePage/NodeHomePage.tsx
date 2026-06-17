@@ -1,11 +1,11 @@
 "use client"
-import useMenu from "@/hooks/useMenu";
 import { INode } from "@/types/node.type";
 import { IoFolderOutline } from "react-icons/io5";
 import { LuNewspaper } from "react-icons/lu";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useNodes } from "@/features/nodes/hooks/useNodes";
+import useMenu from "@/features/menu/hooks/useMenu";
 
 const NodeHomePage = ({
   node,

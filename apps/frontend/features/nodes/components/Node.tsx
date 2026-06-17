@@ -1,9 +1,9 @@
 import React, { SetStateAction } from "react";
 import { CgNotes } from "react-icons/cg";
 import { FaRegFolder } from "react-icons/fa";
-import useMenu from "@/hooks/useMenu";
 import { useRouter } from "next/navigation";
 import { INode } from "../types/node.type";
+import useMenu from "@/features/menu/hooks/useMenu";
 
 const Node = ({
     node,

@@ -1,26 +1,25 @@
 "use client"
-import React, { useEffect } from 'react'
+import React from 'react'
 import useTab from '../hooks/useTab';
 import type { Tab } from '../types/tab.type';
 import { FiHome } from 'react-icons/fi';
 import { GiCancel, GiTrashCan } from 'react-icons/gi';
-import { FaHeart, FaUser, FaUsers } from 'react-icons/fa'
-    ;
+import { FaSearch, FaStar, FaUser, } from 'react-icons/fa'
 import type { TabType } from "../types/tab.type";
-import { CiSearch } from 'react-icons/ci';
 import { FaNoteSticky } from 'react-icons/fa6';
 import { IoSettingsSharp } from 'react-icons/io5';
 import Link from 'next/link';
 import { routeTab } from '../core/routeTab';
+import { TbWorld } from 'react-icons/tb';
 
 export const tabIcons: Record<TabType, React.ComponentType<{ className?: string }>> = {
     home: FiHome,
     trash: GiTrashCan,
-    favorites: FaHeart,
-    search: CiSearch,
+    favorites: FaStar,
+    search: FaSearch,
     note: FaNoteSticky,
     user: FaUser,
-    community: FaUsers,
+    community: TbWorld,
     settings: IoSettingsSharp
 };
 

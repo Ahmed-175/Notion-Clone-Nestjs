@@ -6,7 +6,7 @@ import { GoLink } from "react-icons/go";
 import MenuItem from "./MenuItem";
 import useNodeActions from "@/hooks/useNodeActions";
 import { useState } from "react";
-import Modal from "../../shared/components/Modal";
+import Modal from "@/shared/components/Modal";
 
 const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
   const { addNode, renameNode } = useNodeActions();
