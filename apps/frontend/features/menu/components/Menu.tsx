@@ -7,12 +7,10 @@ import MenuItem from "./MenuItem";
 import { useNodeMutations } from "@/features/nodes/hooks/useNodeMutations";
 import { useState } from "react";
 import Modal from "@/shared/components/Modal";
-import useMenu from "../hooks/useMenu";
 import useToast from "@/hooks/useToast";
 
 const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
   const { createNode, renameNode, deleteNode, toggleFavorite } = useNodeMutations();
-  const { toggleFavorite: toggleFavoriteOld, softDelete: softDeleteOld } = useMenu();
   const { showMgs } = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"create-note" | "create-folder" | "rename">("rename");
