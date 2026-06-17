@@ -10,6 +10,8 @@ export const endpoints = {
     create: "/nodes/create",
     get: "/nodes",
     update: (id: string) => `/nodes/${id}`,
+    delete: (id: string) => `/nodes/${id}`,
+    toggleFavorite: (id: string) => `/nodes/${id}/favorite`,
   },
 
   notes: {

@@ -1,4 +1,4 @@
-import { INode } from "@/features/nodes/types/node.type";
+import { INode } from "@/types/node.type";
 import { SetStateAction } from "react";
 
 export interface IMenuContext {
