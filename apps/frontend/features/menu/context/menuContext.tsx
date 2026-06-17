@@ -1,4 +1,3 @@
-import Menu from "@/components/sidebar_components/Menu";
 import { INode } from "@/types/node.type";
 import {
   createContext,
@@ -7,6 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
+import Menu from "../components/Menu";
 
 interface IMenuContext {
   showMenu: (node: INode, x: number, y: number) => void;

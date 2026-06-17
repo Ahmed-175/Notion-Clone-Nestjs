@@ -14,14 +14,12 @@ import { useEffect, useState } from "react";
 const page = () => {
     const { note } = useNote();
     const { user } = useAuth();
-    console.log(note);
     const [editable, setEditable] = useState(false)
     const { setLabel, activeTabId } = useTab();
     useEffect(() => {
         if (note && activeTabId) {
             setLabel(activeTabId, note.title);
             const isOwer = note.ownerId == user._id
-            // const isC = note.contributors.find((c) => c)
             if (note.ownerId == user._id) {
                 setEditable(true)
             }
@@ -45,4 +43,4 @@ const page = () => {
     )
 }
 
-export default page
+export default page;

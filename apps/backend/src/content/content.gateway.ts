@@ -30,7 +30,6 @@ export class ContentGateway {
       content: string;
     },
   ) {
-    console.log(body);
     const updatecontent = await this.noteService.handleContentChanges(
       client.data.user._id,
       body.content,

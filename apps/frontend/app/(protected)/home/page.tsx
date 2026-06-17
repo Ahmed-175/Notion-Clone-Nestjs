@@ -4,9 +4,9 @@ import { useMemo, useState } from "react";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 import NodeHomePage from "@/components/homePage/NodeHomePage";
-import useMenu from "@/hooks/useMenu";
 import { INode } from "@/types/node.type";
 import { useNodes } from "@/features/nodes/hooks/useNodes";
+import useMenu from "@/features/menu/hooks/useMenu";
 
 const home = {
   title: "main folder",
