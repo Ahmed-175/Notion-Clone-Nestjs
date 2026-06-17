@@ -7,14 +7,8 @@ import {
   useState,
 } from "react";
 import Menu from "../components/Menu";
+import { IMenuContext } from "../types/menu.type";
 
-interface IMenuContext {
-  showMenu: (node: INode, x: number, y: number) => void;
-  openMenu: boolean;
-  setNode: React.Dispatch<SetStateAction<INode>>;
-  node: INode;
-  position: { x: number; y: number };
-}
 
 export const menuContext = createContext<IMenuContext | null>(null);
 
@@ -52,6 +46,10 @@ const MenuProvider = ({ children }: { children: React.ReactNode }) => {
       window.removeEventListener("mousedown", handleClickOut);
     };
   }, []);
+
+  const toggleFavorite = (nodeId : string) => {
+    
+  }
 
   return (
     <menuContext.Provider
