@@ -8,10 +8,12 @@ import { useNodeMutations } from "@/features/nodes/hooks/useNodeMutations";
 import { useState } from "react";
 import Modal from "@/shared/components/Modal";
 import useMenu from "../hooks/useMenu";
+import useToast from "@/hooks/useToast";
 
 const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
   const { createNode, renameNode, deleteNode, toggleFavorite } = useNodeMutations();
   const { toggleFavorite: toggleFavoriteOld, softDelete: softDeleteOld } = useMenu();
+  const { showMgs } = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"create-note" | "create-folder" | "rename">("rename");
   const [nodeTitle, setNodeTitle] = useState("");
@@ -81,9 +83,18 @@ const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
               onClick={() => handleOpenModal("rename")}
             />
 
-            <MenuItem icon={<GoLink />} label="Copy link" onClick={() => {
-              navigator.clipboard.writeText(`${window.location.origin}/note/${node._id}`);
-            }} />
+            {node.type === "note" && (
+              <MenuItem
+                icon={<GoLink />}
+                label="Copy link"
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `${window.location.origin}/note/${node._id}`
+                  );
+                  showMgs({ type: "success", message: "Link copied to clipboard" });
+                }}
+              />
+            )}
 
             <MenuItem
               icon={<FaRegTrashAlt />}
