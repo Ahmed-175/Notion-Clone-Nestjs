@@ -6,4 +6,5 @@ export interface INode {
   isTrash: boolean;
   parentId: string | null;
   children: string[];
+  createdAt: string;
 }

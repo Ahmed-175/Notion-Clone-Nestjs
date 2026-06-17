@@ -72,10 +72,26 @@ export const useNodeMutations = () => {
     },
   });
 
+  const restoreNode = useMutation({
+    mutationFn: (id: string) => nodeService.restore(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["nodes"] });
+      queryClient.invalidateQueries({ queryKey: ["trash"] });
+      showMgs({ type: "success", message: "Node restored" });
+    },
+    onError: (error: any) => {
+      showMgs({
+        type: "error",
+        message: error.response?.data?.message || "Failed to restore node",
+      });
+    },
+  });
+
   return {
     createNode,
     renameNode,
     deleteNode,
     toggleFavorite,
+    restoreNode,
   };
 };

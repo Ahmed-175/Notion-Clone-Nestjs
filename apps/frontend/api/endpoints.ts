@@ -14,6 +14,7 @@ export const endpoints = {
     update: (id: string) => `/nodes/${id}`,
     delete: (id: string) => `/nodes/${id}`,
     toggleFavorite: (id: string) => `/nodes/${id}/favorite`,
+    restore: (id: string) => `/nodes/${id}/restore`,
   },
 
   notes: {

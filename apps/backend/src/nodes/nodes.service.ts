@@ -87,6 +87,31 @@ export class NodesService {
     }
   }
 
+  async restoreNode(id: string, userId: string) {
+    try {
+      const node = await this.nodeModel.findOneAndUpdate(
+        {
+          _id: id,
+          ownerId: userId,
+          isTrash: true,
+        },
+        {
+          isTrash: false,
+        },
+        {
+          new: true,
+        },
+      );
+
+      if (!node) {
+        return { errorMessage: "Node not found or unauthorized" };
+      }
+      return node;
+    } catch (error) {
+      return { errorMessage: error };
+    }
+  }
+
   async delete(id: string, userId: string) {
     try {
       const result = await this.nodeModel.deleteOne({

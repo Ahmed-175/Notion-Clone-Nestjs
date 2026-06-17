@@ -39,6 +39,11 @@ export class NodesController {
     return await this.nodesService.sortDelete(id, req.user._id);
   }
 
+  @Patch(":id/restore")
+  async restoreNode(@Param("id") id: string, @Request() req) {
+    return await this.nodesService.restoreNode(id, req.user._id);
+  }
+
   @Get("")
   async getNodes(@Request() req) {
     return await this.nodesService.getNoteTree(req.user._id);

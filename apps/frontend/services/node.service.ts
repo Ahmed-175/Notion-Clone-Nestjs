@@ -18,6 +18,9 @@ export const nodeService = {
   toggleFavorite: (id: string) => {
     return axiosInstance.patch(endpoints.nodes.toggleFavorite(id));
   },
+  restore: (id: string) => {
+    return axiosInstance.patch(endpoints.nodes.restore(id));
+  },
   getNodes: async () => {
     const res : any = await axiosInstance.get(endpoints.nodes.get);
     return res.data;

@@ -53,8 +53,8 @@ const Page = () => {
       }}
       className="relative min-h-[80vh] p-3.5"
     >
-      <h1 className="w-full text-4xl mb-9 font-bold text-center">
-        Home Page
+      <h1 className="w-full uppercase text-4xl mb-9 font-bold text-center">
+        {currentFolder.title}
       </h1>
 
       {path.length > 0 && (
