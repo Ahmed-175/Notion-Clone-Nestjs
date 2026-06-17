@@ -12,6 +12,12 @@ export const nodeService = {
   update: (id: string, data: { title: string }) => {
     return axiosInstance.put(endpoints.nodes.update(id), data);
   },
+  softDelete: (id: string) => {
+    return axiosInstance.delete(endpoints.nodes.delete(id));
+  },
+  toggleFavorite: (id: string) => {
+    return axiosInstance.patch(endpoints.nodes.toggleFavorite(id));
+  },
   getNodes: async () => {
     const res : any = await axiosInstance.get(endpoints.nodes.get);
     return res.data;

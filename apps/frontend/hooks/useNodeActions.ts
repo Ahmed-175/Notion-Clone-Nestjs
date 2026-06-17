@@ -72,7 +72,43 @@ const useNodeActions = () => {
     }
   };
 
-  return { addNode, renameNode };
+  const deleteNode = async (id: string) => {
+    try {
+      await nodeService.softDelete(id);
+      setNodes((prev) => {
+        const newNodes = { ...prev };
+        if (newNodes[id]) {
+          newNodes[id] = { ...newNodes[id], isTrash: true };
+        }
+        return newNodes;
+      });
+      showMgs({ type: "success", message: "Node moved to trash" });
+    } catch (error) {
+      showMgs({ type: "error", message: "Failed to move node to trash" });
+    }
+  };
+
+  const toggleFavoriteNode = async (id: string) => {
+    try {
+      const res = await nodeService.toggleFavorite(id);
+      const updatedNode = (res.data as any).node;
+      setNodes((prev) => {
+        const newNodes = { ...prev };
+        if (newNodes[id]) {
+          newNodes[id] = { ...newNodes[id], isFavorite: updatedNode.isFavorite };
+        }
+        return newNodes;
+      });
+      showMgs({
+        type: "success",
+        message: updatedNode.isFavorite ? "Added to favorites" : "Removed from favorites",
+      });
+    } catch (error) {
+      showMgs({ type: "error", message: "Failed to update favorites" });
+    }
+  };
+
+  return { addNode, renameNode, deleteNode, toggleFavoriteNode };
 };
 
 export default useNodeActions;

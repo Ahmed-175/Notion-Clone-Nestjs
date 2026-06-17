@@ -7,9 +7,11 @@ import MenuItem from "./MenuItem";
 import useNodeActions from "@/hooks/useNodeActions";
 import { useState } from "react";
 import Modal from "@/shared/components/Modal";
+import useMenu from "../hooks/useMenu";
 
 const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
   const { addNode, renameNode } = useNodeActions();
+  const { toggleFavorite, softDelete } = useMenu();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"create-note" | "create-folder" | "rename">("rename");
   const [nodeTitle, setNodeTitle] = useState("");
@@ -79,18 +81,20 @@ const Menu = ({ node, x, y }: { node: INode; x: number; y: number }) => {
               onClick={() => handleOpenModal("rename")}
             />
 
-            <MenuItem icon={<GoLink />} label="Copy link" onClick={() => { }} />
+            <MenuItem icon={<GoLink />} label="Copy link" onClick={() => {
+              navigator.clipboard.writeText(`${window.location.origin}/note/${node._id}`);
+            }} />
 
             <MenuItem
               icon={<FaRegTrashAlt />}
               label="Move to bin"
-              onClick={() => { }}
+              onClick={() => softDelete()}
             />
 
             <MenuItem
               icon={<FaRegStar />}
-              label="Add to favorites"
-              onClick={() => { }}
+              label={node.isFavorite ? "Remove from favorites" : "Add to favorites"}
+              onClick={() => toggleFavorite(node._id)}
             />
           </>
         )}

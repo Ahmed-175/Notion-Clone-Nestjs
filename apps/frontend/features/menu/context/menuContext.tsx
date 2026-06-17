@@ -1,19 +1,20 @@
 import { INode } from "@/types/node.type";
 import {
   createContext,
-  SetStateAction,
   useEffect,
   useRef,
   useState,
 } from "react";
 import Menu from "../components/Menu";
 import { IMenuContext } from "../types/menu.type";
+import useNodeActions from "@/hooks/useNodeActions";
 
 
 export const menuContext = createContext<IMenuContext | null>(null);
 
 const MenuProvider = ({ children }: { children: React.ReactNode }) => {
   const [openMenu, setOpenMenu] = useState(false);
+  const { toggleFavoriteNode, deleteNode } = useNodeActions();
   const home: any = {
     title: "main folder",
     _id: null,
@@ -47,8 +48,16 @@ const MenuProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  const toggleFavorite = (nodeId : string) => {
-    
+  const toggleFavorite = async (nodeId: string) => {
+    await toggleFavoriteNode(nodeId);
+    setOpenMenu(false);
+  }
+
+  const softDelete = async () => {
+    if (node._id) {
+      await deleteNode(node._id);
+      setOpenMenu(false);
+    }
   }
 
   return (
@@ -59,6 +68,8 @@ const MenuProvider = ({ children }: { children: React.ReactNode }) => {
         setNode,
         node,
         position,
+        toggleFavorite,
+        softDelete,
       }}
     >
       {children}
