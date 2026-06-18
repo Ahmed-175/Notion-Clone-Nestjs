@@ -48,7 +48,7 @@ const TrashPage = () => {
                     title="Restore item"
                   >
                     <MdOutlineRestore className="text-xl" />
-            
+
                   </button>
                 </td>
               </tr>

@@ -45,7 +45,7 @@ describe("Nodes Module E2E Testing", () => {
       email: "node-test@gmail.com",
       password: "password123",
     });
-  });
+  }, 30000);
 
   afterAll(async () => {
     if (app) {
@@ -53,7 +53,9 @@ describe("Nodes Module E2E Testing", () => {
       await connection.close();
       await app.close();
     }
-    await redis.quit();
+    if (redis) {
+      await redis.quit();
+    }
   });
 
   it("should create a new node (folder) /nodes/create (POST)", async () => {

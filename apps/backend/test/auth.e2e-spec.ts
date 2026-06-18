@@ -31,7 +31,7 @@ describe("Auth Module E2E Testing", () => {
     });
 
     agent = request.agent(app.getHttpServer());
-  });
+  }, 30000);
 
   it("Register test auth/register", async () => {
     const res = await agent.post("/auth/register").send({
@@ -74,6 +74,8 @@ describe("Auth Module E2E Testing", () => {
       await connection.close();
       await app.close();
     }
-    await redis.quit();
+    if (redis) {
+      await redis.quit();
+    }
   });
 });
