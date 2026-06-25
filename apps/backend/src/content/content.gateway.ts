@@ -1,12 +1,5 @@
-import {
-  ConnectedSocket,
-  MessageBody,
-  SubscribeMessage,
-  WebSocketGateway,
-} from "@nestjs/websockets";
+import { WebSocketGateway } from "@nestjs/websockets";
 import { ContentService } from "./content.service";
-import type { AuthenticatedSocket } from "src/common/types/AuthenticatedSocket.type";
-import { NotesService } from "src/notes/notes.service";
 
 @WebSocketGateway({
   namespace: "/note",
@@ -18,26 +11,6 @@ import { NotesService } from "src/notes/notes.service";
 export class ContentGateway {
   constructor(
     private readonly contentService: ContentService,
-    private readonly noteService: NotesService,
+    // private readonly noteService: NotesService,
   ) {}
-
-  @SubscribeMessage("edit-content-note")
-  async handleChangeContentNote(
-    @ConnectedSocket() client: AuthenticatedSocket,
-    @MessageBody()
-    body: {
-      node_id: string;
-      content: string;
-    },
-  ) {
-    const updatecontent = await this.noteService.handleContentChanges(
-      client.data.user._id,
-      body.content,
-      body.node_id,
-    );
-
-    client
-      .to(`note:${body.node_id}`)
-      .emit("user-update-content", updatecontent);
-  }
 }
