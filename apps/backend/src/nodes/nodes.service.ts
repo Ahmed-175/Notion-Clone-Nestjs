@@ -3,8 +3,8 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Node } from "./schemas/node.schema";
 import { Model } from "mongoose";
 import { CreateNodeDto } from "./dto/create-node";
-import { Note } from "./schemas/note.schema";
 import { BuildTree } from "src/common/utils/buildTreeFileSystem";
+import { Note } from "src/notes/schema/note.schema";
 
 @Injectable()
 export class NodesService {

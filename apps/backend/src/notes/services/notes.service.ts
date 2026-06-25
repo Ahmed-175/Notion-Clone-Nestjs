@@ -7,7 +7,8 @@ import {
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Node } from "src/nodes/schemas/node.schema";
-import { Note } from "src/nodes/schemas/note.schema";
+import { Note } from "../schema/note.schema";
+import { CommitType, ICommitLineDto } from "../types/commit.type";
 
 @Injectable()
 export class NotesService {
@@ -18,7 +19,6 @@ export class NotesService {
     @InjectModel(Node.name)
     private readonly nodeModel: Model<Node>,
   ) {}
-
   async findByNodeId(nodeId: string) {
     const node = await this.nodeModel
       .findOne({
@@ -46,30 +46,44 @@ export class NotesService {
       ...note,
     };
   }
-
-  async handleContentChanges(userId: string, content: string, nodeId: string) {
+  async handleCommitLines(
+    commits: ICommitLineDto[],
+    nodeId: string,
+    userId: string,
+  ) {
     const node = await this.nodeModel.findById(nodeId);
-    const note = await this.noteModel.findOne({ nodeId });
-
-    if (!node || !note) {
-      throw new NotFoundException("this note does not exist");
+    if (!node) {
+      throw new NotFoundException("Node not found");
     }
+    const isOwner = node?.ownerId.toString() === userId;
 
-    const isOwner = node.ownerId.toString() === userId;
-
-    const isContributor = node.contributors.some(
-      (id: any) => id.toString() === userId,
+    const isContributor = node?.contributors.some(
+      (c) => c.toString() === userId,
     );
 
     if (!isOwner && !isContributor) {
       throw new UnauthorizedException(
-        "You do not have permission to update the content",
+        "You do not have access to update this node",
       );
     }
+    const note = await this.noteModel.findOne({ nodeId });
+    for (const commit of commits) {
+      switch (commit.type) {
+        case CommitType.NEW:
+          // commit.data => INewLineData
 
-    note.content = content;
-    await note.save();
+          break;
 
-    return note.content;
+        case CommitType.DELETE:
+          // commit.data => IDeleteLineData
+
+          break;
+
+        case CommitType.UPDATE:
+          // commit.data => IUpdateLineData
+
+          break;
+      }
+    }
   }
 }
