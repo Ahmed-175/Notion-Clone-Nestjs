@@ -1,5 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { PresenceService } from "./presence.service";
+import { PresenceService } from "../presence.service";
 import { RedisService } from "src/redis/redis.service";
 import { getModelToken } from "@nestjs/mongoose";
 import { User } from "src/users/schemas/user.schema";

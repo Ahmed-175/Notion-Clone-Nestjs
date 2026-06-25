@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { getModelToken } from "@nestjs/mongoose";
-import { UsersService } from "./users.service";
-import { User } from "./schemas/user.schema";
+import { UsersService } from "../users.service";
+import { User } from "../schemas/user.schema";
 import { PasswordHasher } from "src/common/utils/password.util";
 import { JwtService } from "@nestjs/jwt";
 import { BadRequestException, UnauthorizedException } from "@nestjs/common";

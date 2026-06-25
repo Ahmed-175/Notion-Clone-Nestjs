@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { ContentGateway } from "./content.gateway";
-import { ContentService } from "./content.service";
+import { ContentGateway } from "../content.gateway";
+import { ContentService } from "../content.service";
 
 describe("ContentGateway", () => {
   let gateway: ContentGateway;

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { PresenceGateway } from "./presence.gateway";
-import { PresenceService } from "./presence.service";
+import { PresenceGateway } from "../presence.gateway";
+import { PresenceService } from "../presence.service";
 import { WsAuthService } from "src/common/middlewares/ws-auth.service";
 
 describe("PresenceGateway", () => {
