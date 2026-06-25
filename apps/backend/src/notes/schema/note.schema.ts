@@ -30,7 +30,7 @@ export class Note {
   public: boolean;
   @Prop({ default: 27 })
   font_size: number;
-  @Prop({ default: "en" })
+  @Prop({ type: String, enum: ["en", "ar"], default: "en" })
   lang: "en" | "ar";
   @Prop({
     type: mongoose.Schema.Types.ObjectId,

@@ -16,7 +16,8 @@ export class Block {
 
   @Prop({
     required: true,
-    enum: BlockType,
+    type: String,
+    enum: Object.values(BlockType),
   })
   type: BlockType;
 

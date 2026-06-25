@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
-import { Note } from "./note.schema";
 import { BlockType } from "../types/blockData.type";
 
 @Schema({
@@ -11,14 +10,15 @@ export class Block {
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
-    ref: Note.name,
+    ref: "Note",
     index: true,
   })
   noteId: mongoose.Types.ObjectId;
 
   @Prop({
     required: true,
-    enum: BlockType,
+    type: String,
+    enum: Object.values(BlockType),
   })
   type: BlockType;
 
