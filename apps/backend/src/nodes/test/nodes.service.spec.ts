@@ -1,9 +1,9 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { getModelToken } from "@nestjs/mongoose";
-import { NodesService } from "../../../src/nodes/nodes.service";
-import { Node } from "../../../src/nodes/schemas/node.schema";
-import { Note } from "../../../src/nodes/schemas/note.schema";
-import { BuildTree } from "../../../src/common/utils/buildTreeFileSystem";
+import { NodesService } from "../nodes.service";
+import { Node } from "../schemas/node.schema";
+import { Note } from "../schemas/note.schema";
+import { BuildTree } from "src/common/utils/buildTreeFileSystem";
 import { BadRequestException } from "@nestjs/common";
 import mongoose from "mongoose";
 

@@ -1,8 +1,8 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { UsersController } from "../../../src/users/users.controller";
-import { UsersService } from "../../../src/users/users.service";
+import { UsersController } from "../users.controller";
+import { UsersService } from "../users.service";
 import { getModelToken } from "@nestjs/mongoose";
-import { User } from "../../../src/users/schemas/user.schema";
+import { User } from "../schemas/user.schema";
 
 describe("UsersController", () => {
   let controller: UsersController;
