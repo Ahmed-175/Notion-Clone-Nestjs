@@ -84,7 +84,9 @@ describe("UsersService", () => {
 
       const result = await service.googleAuth(userData);
 
-      expect(mockUserModel.findOne).toHaveBeenCalledWith({ email: userData.email });
+      expect(mockUserModel.findOne).toHaveBeenCalledWith({
+        email: userData.email,
+      });
       expect(jwtService.sign).toHaveBeenCalled();
       expect(result).toBe("mock-token");
     });
@@ -99,7 +101,9 @@ describe("UsersService", () => {
 
       const result = await service.googleAuth(userData);
 
-      expect(mockUserModel.findOne).toHaveBeenCalledWith({ email: userData.email });
+      expect(mockUserModel.findOne).toHaveBeenCalledWith({
+        email: userData.email,
+      });
       expect(jwtService.sign).toHaveBeenCalled();
       expect(result).toBe("mock-token");
     });
@@ -117,7 +121,9 @@ describe("UsersService", () => {
 
       const result = await service.create(dto);
 
-      expect(mockUserModel.find).toHaveBeenCalledWith({ username: dto.username });
+      expect(mockUserModel.find).toHaveBeenCalledWith({
+        username: dto.username,
+      });
       expect(mockUserModel.findOne).toHaveBeenCalledWith({ email: dto.email });
       expect(hasher.hash).toHaveBeenCalledWith(dto.password);
       expect(jwtService.sign).toHaveBeenCalled();
@@ -163,7 +169,10 @@ describe("UsersService", () => {
       const result = await service.checkUser(dto);
 
       expect(mockUserModel.findOne).toHaveBeenCalledWith({ email: dto.email });
-      expect(hasher.comparePasswords).toHaveBeenCalledWith(dto.password, "hashedpassword");
+      expect(hasher.comparePasswords).toHaveBeenCalledWith(
+        dto.password,
+        "hashedpassword",
+      );
       expect(result).toBe("mock-token");
     });
 
@@ -188,7 +197,9 @@ describe("UsersService", () => {
       mockUserModel.findOne.mockReturnValue(userWithPassword);
       mockHasher.comparePasswords.mockResolvedValue(false);
 
-      await expect(service.checkUser(dto)).rejects.toThrow(UnauthorizedException);
+      await expect(service.checkUser(dto)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
   });
 
