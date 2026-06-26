@@ -1,6 +1,5 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
-  "ui": "tui",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -12,6 +11,10 @@
     },
     "check-types": {
       "dependsOn": ["^check-types"]
+    },
+    "test": {
+      "cache": false,
+      "inputs": ["src/**/*.ts", "test/**/*.ts", "**/*.spec.ts", "**/*.e2e-spec.ts"]
     },
     "dev": {
       "cache": false,
