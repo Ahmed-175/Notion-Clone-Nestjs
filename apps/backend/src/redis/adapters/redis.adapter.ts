@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { IoAdapter } from "@nestjs/platform-socket.io";
 import { createAdapter } from "@socket.io/redis-adapter";
 import { RedisService } from "../redis.service";
+import { Server, ServerOptions } from "socket.io";
 
 @Injectable()
 export class RedisIoAdapter extends IoAdapter {
@@ -10,17 +11,15 @@ export class RedisIoAdapter extends IoAdapter {
     super();
   }
 
-  async connectToRedis() {
+  connectToRedis() {
     const pubClient = this.redisService.getClient();
     const subClient = this.redisService.createSubscriber();
-
-    await subClient.connect();
 
     this.adapterConstrunctor = createAdapter(pubClient, subClient);
   }
 
-  createIOServer(port: number, options?: any) {
-    const server = super.create(port, options);
+  createIOServer(port: number, options?: ServerOptions) {
+    const server = super.createIOServer(port, options) as Server;
 
     server.adapter(this.adapterConstrunctor);
 
