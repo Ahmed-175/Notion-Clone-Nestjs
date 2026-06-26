@@ -15,17 +15,16 @@ const page = () => {
     const { note } = useNote();
     const { user } = useAuth();
     const [editable, setEditable] = useState(false)
-    const { setLabel, activeTabId } = useTab();
+    const { setLabel } = useTab();
     useEffect(() => {
-        if (note && activeTabId) {
-            setLabel(activeTabId, note.title);
-            const isOwer = note.ownerId == user._id
+        if (note) {
+            setLabel(`note:${note._id}`, note.title);
             if (note.ownerId == user._id) {
                 setEditable(true)
             }
         }
 
-    }, [note?._id, note?.title, setLabel]);
+    }, [note?._id, note?.title, setLabel, user?._id]);
     return (
         <div className=" relative">
             <EditorProvider>
