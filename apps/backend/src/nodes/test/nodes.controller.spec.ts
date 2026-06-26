@@ -1,8 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { NodesController } from "../../../src/nodes/nodes.controller";
-import { NodesService } from "../../../src/nodes/nodes.service";
-import { CreateNodeDto } from "../../../src/nodes/dto/create-node";
-import { UpdateNodeDto } from "../../../src/nodes/dto/update-node";
+import { NodesController } from "../nodes.controller";
+import { NodesService } from "../nodes.service";
+import { UpdateNodeDto } from "../dto/update-node";
 
 describe("NodesController", () => {
   let controller: NodesController;

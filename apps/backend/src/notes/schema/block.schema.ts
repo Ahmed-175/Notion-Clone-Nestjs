@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { BlockType } from "../types/blockData.type";
-
 @Schema({
   timestamps: true,
   versionKey: false,

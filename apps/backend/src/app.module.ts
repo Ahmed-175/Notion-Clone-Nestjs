@@ -9,7 +9,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { NotesModule } from "./notes/notes.module";
 import { RedisModule } from "./redis/redis.module";
 import { PresenceModule } from "./presence/presence.module";
-import { ContentModule } from './content/content.module';
+import { ContentModule } from "./content/content.module";
 
 @Module({
   imports: [

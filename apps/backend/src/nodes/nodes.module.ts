@@ -3,8 +3,8 @@ import { NodesService } from "./nodes.service";
 import { NodesController } from "./nodes.controller";
 import { MongooseModule } from "@nestjs/mongoose";
 import { Node, nodeSchema } from "./schemas/node.schema";
-import { Note, noteSchema } from "./schemas/note.schema";
 import { BuildTree } from "src/common/utils/buildTreeFileSystem";
+import { Note, noteSchema } from "src/notes/schema/note.schema";
 
 @Module({
   imports: [
