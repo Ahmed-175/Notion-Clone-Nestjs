@@ -7,7 +7,7 @@ import {
   WebSocketGateway,
   WsException,
 } from "@nestjs/websockets";
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 import type { AuthenticatedSocket } from "src/common/types/AuthenticatedSocket.type";
 import { PresenceService } from "./presence.service";
 import { WsAuthService } from "src/common/middlewares/ws-auth.service";
@@ -25,6 +25,12 @@ export class PresenceGateway implements OnGatewayInit, OnGatewayDisconnect {
     private readonly presenceService: PresenceService,
     private readonly wsAuthService: WsAuthService,
   ) {}
+
+  handleConnection(client: Socket) {
+    console.log(
+      `PID=${process.pid} PORT=${process.env.PORT} CLIENT=${client.id}`,
+    );
+  }
 
   async handleDisconnect(client: AuthenticatedSocket) {
     const noteId = client.data.currentNote;
