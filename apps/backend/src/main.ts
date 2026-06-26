@@ -1,34 +1,16 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import cookieParser from "cookie-parser";
-import { NestExpressApplication } from "@nestjs/platform-express";
-import { join } from "path";
+import { createApp } from "./app";
+import { RedisIoAdapter } from "./redis/adapters/redis.adapter";
+
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.use(cookieParser());
-  app.setGlobalPrefix("api");
-  app.useStaticAssets(join(__dirname, "..", "uploads"), {
-    prefix: "/api/uploads/",
-  });
+  const app = await createApp();
 
-  const config = new DocumentBuilder();
-  config
-    .setTitle("Notion Clone API")
-    .setDescription("API documentation for Notion clone project")
-    .setVersion("1.0")
-    .addBearerAuth()
-    .build();
+  const redisAdapter = app.get(RedisIoAdapter);
 
-  const docs = SwaggerModule.createDocument(app, config as any);
-  SwaggerModule.setup("docs", app, docs);
-  app.enableCors({
-    origin: ["http://localhost:3000", "http://localhost"],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  });
+  await redisAdapter.connectToRedis();
+
+  app.useWebSocketAdapter(redisAdapter);
 
   await app.listen(process.env.PORT ?? 8000);
 }
+
 bootstrap();

@@ -14,6 +14,14 @@ export class RedisService {
     }
   }
 
+  getClient(): Redis {
+    return this.redis;
+  }
+
+  createSubscriber(): Redis {
+    return this.redis.duplicate();
+  }
+
   async get(key: string): Promise<string | null> {
     return this.redis.get(key);
   }
